@@ -1,0 +1,41 @@
+
+
+Open up Powershell, ensuring you have the Azure CLI installed
+
+
+Azure CLI:
+az login
+az account set -s "Resolute Sandbox"  
+az group create --name sjbDeleteMe60 --location eastus
+az deployment group create --template-file .\deploy-dicom-service.bicep --resource-group sjbDeleteMe60
+
+
+Powershell:
+
+New-AzResourceGroup -Name sjbDeleteMe69 -Location "Central US"
+
+New-AzResourceGroupDeployment `
+  -Name sjbDeleteMeNow `
+  -ResourceGroupName sjbDeleteMe69 `
+  -TemplateFile .\deploy-dicom-service.bicep
+
+
+
+
+
+Works
+az group list --query "[?name =='sjbDeleteMe3'].{name:name}" --output table
+
+Works
+$query="[?starts_with(name, 'sjbDeleteMe')].name"
+az group list --query "$query" --output table
+
+Seems dangerous
+az group list --query "$query" | az group delete
+
+Works
+$query="[?starts_with(name, 'sjbDeleteMe')].name"
+$list_to_delete = az group list --query "$query" 
+$list_to_delete
+
+az group delete --resource-group sjbDeleteMe67
