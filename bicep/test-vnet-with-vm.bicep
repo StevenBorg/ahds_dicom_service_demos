@@ -1,11 +1,3 @@
-@description('Username for the Virtual Machine.')
-param adminUsername string = 'student'
-
-@description('Password for the Virtual Machine.')
-@minLength(12)
-@secure()
-param adminPassword string
-
 @description('VNet name')
 param vnetName string = 'ContosoVnet'
 
@@ -17,6 +9,12 @@ param subnet1Prefix string = '10.0.0.0/24'
 
 @description('Subnet 1 Name')
 param subnet1Name string = 'radiologySubnet'
+
+// @description('Subnet 2 Prefix')
+// param subnet2Prefix string = '10.0.1.0/24'
+
+// @description('Subnet 2 Name')
+// param subnet2Name string = 'Subnet2'
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
@@ -39,25 +37,10 @@ param cpuCores int = 4
 @description('The amount of memory to allocate to the container in gigabytes.')
 param memoryInGb int = 16
 
-// module vnet_deployment './deploy-vnet-with-jump-vm.bicep' = {
-//   name: 'vnet_deployment'
-//   params: {
-//     location: location
-//     adminUsername: adminUsername
-//     adminPassword: adminPassword
-//     vnetName: vnetName
-//     vnetAddressPrefix: vnetAddressPrefix
-//     subnet1Name: subnet1Name
-//     subnet1Prefix: subnet1Prefix
-//   }
-// }
-
 module vnet_deployment './deploy-vnet.bicep' = {
   name: 'vnet_deployment'
   params: {
     location: location
-    // adminUsername: adminUsername
-    // adminPassword: adminPassword
     vnetName: vnetName
     vnetAddressPrefix: vnetAddressPrefix
     subnet1Name: subnet1Name
@@ -96,14 +79,13 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
       }
     ]
     osType: 'Linux'
-    // networkProfile: {
-    //   id: vnet_deployment.outputs.networkProfileId 
-    // }
+    networkProfile: {
+      id: vnet_deployment.outputs.networkProfileId 
+    }
     restartPolicy: 'Always'
   }
 }
 
-//output qvera_ip_address string = containerGroup.properties.ipAddress.ip
-//output jump_vm_hostname string = vnet_deployment.outputs.hostname
-//output jump_vm_hostip string = vnet_deployment.outputs.hostip
 
+
+output containerIPv4Address string = containerGroup.properties.ipAddress.ip

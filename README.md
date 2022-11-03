@@ -9,6 +9,26 @@ For nearly every demo environment deployed here, you will need an App Registrati
 The following document provides guidance: https://learn.microsoft.com/en-us/azure/healthcare-apis/register-application-cli-rest 
 
 
+Demo walkthrough (only Microsoft): https://microsoft.sharepoint.com/:w:/t/ProjectResolute/EfR03qdjIOpJqapRROvaNUABykS9MhKGGjYc5MO55Qn57w?e=fpqPpa&isSPOFile=1&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjEwMjgwNzIwMCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+IGNORE below:
+
+
 Steps:
 az login --scope https://graph.microsoft.com//.default
 az ad app create --display-name sjbAppReg
