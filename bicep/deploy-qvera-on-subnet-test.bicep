@@ -30,12 +30,11 @@ param cpuCores int = 4
 @description('The amount of memory to allocate to the container in gigabytes.')
 param memoryInGb int = 16
 
-@description('Vnet name')
-param vnet_name string = 'ContosoVnet'
 
-// var networkProfileName = 'aci-networkProfile'
-// var interfaceConfigName = 'eth0'
-// var interfaceIpConfig = 'ipconfigprofile1'
+
+var networkProfileName = 'aci-networkProfile'
+var interfaceConfigName = 'eth0'
+var interfaceIpConfig = 'ipconfigprofile1'
 
 
 
@@ -44,30 +43,63 @@ module jumpbox_deployment './deploy-vnet-with-jump-vm.bicep' = {
   params: {
     location: location
     adminPassword: adminPassword
-    vnetName: vnet_name
-
   }
 }
 
-module add_container_subnet './add-subnet-for-containters-to-existing-vnet.bicep' = {
-  name: 'container_subnet'
+resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
+  name: 'ContosoVnet'
+}
+
+resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
+  name: subnet1Name
+  parent: vnet
   dependsOn: [
     jumpbox_deployment
   ]
-  params: {
-    location: location
-    subnet1Name: subnet1Name
-    subnet1Prefix: subnet1Prefix
+  properties: {
+    addressPrefix: subnet1Prefix
+    delegations: [
+      {
+        name: 'DelegationService'
+        properties: {
+          serviceName: 'Microsoft.ContainerInstance/containerGroups'
+        }
+      }
+    ]
   }
 }
 
+// Network profiles are automatically created, but it was in the demo, so I copied it over...
+resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
+  name: networkProfileName
+  location: location
+  properties: {
+    containerNetworkInterfaceConfigurations: [
+      {
+        name: interfaceConfigName
+        properties: {
+          ipConfigurations: [
+            {
+              name: interfaceIpConfig
+              properties: {
+                subnet: {
+                  id: subnet1.id
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
 
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: containerGroupName
   location: location
   dependsOn: [
     jumpbox_deployment
-    add_container_subnet
+    subnet1
   ]
   properties: {
     containers: [
@@ -140,7 +172,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
       {
         name: 'myvolume'
         gitRepo: {
-          repository: 'https://github.com/StevenBorg/ahds_demo_config'
+          repository: 'https://github.com/StevenBorg/ahds_dicom_service_demos/tree/main/qvera/mariadb-init'
           directory: '.'
         } 
       }
@@ -150,7 +182,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
     //  But this causes an error with the jump vm script
     //  WHOOAA!!!  Without this the container-group doesn't GET an ip address!
     networkProfile: {
-      id: add_container_subnet.outputs.networkProfileId  //networkProfile.id
+      id: networkProfile.id
       
     }
 
@@ -160,7 +192,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
 
 output vm string = jumpbox_deployment.outputs.hostname
 output vnet string = jumpbox_deployment.outputs.vnetName
-output subnetName string = add_container_subnet.outputs.subnetName
-output subnetId string = add_container_subnet.outputs.subnetId
+output subnetName string = subnet1.name
+output subnetId string = subnet1.id
 
 

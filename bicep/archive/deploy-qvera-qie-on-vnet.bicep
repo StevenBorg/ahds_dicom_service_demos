@@ -83,14 +83,18 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
           image: image
           ports: [
             {
-              port: port
+              port: 3310
               protocol: 'TCP'
             }
           ]
           environmentVariables: [
             {
-              name: 'testEnvVar'
-              value: 'testvalueEnvVar'
+              name: 'MYSQL_DATABASE'
+              value: 'qui'
+            }
+            {
+              name: 'MYSQL_ROOT_PASSWORD'
+              value: 'root'
             }
           ]
           resources: {
