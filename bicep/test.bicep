@@ -1,57 +1,38 @@
-@description('VNet name')
-param vnetName string = 'aci-vnet'
-
-@description('Address prefix')
-param vnetAddressPrefix string = '10.0.0.0/16'
-
-@description('Subnet prefix')
-param subnetAddressPrefix string = '10.0.0.0/24'
-
-@description('Subnet name')
-param subnetName string = 'aci-subnet'
+@description('Password for the Virtual Machine.')
+@minLength(12)
+@secure()
+param adminPassword string
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
-@description('Container group name')
-param containerGroupName string = 'aci-containergroup'
+@description('Subnet 1 Prefix')
+param subnet1Prefix string = '10.0.1.0/24'
 
-@description('Container name')
-param containerName string = 'aci-container'
+@description('Subnet 1 Name')
+param subnet1Name string = 'qveraSubnet'
 
-@description('Container image to deploy. Should be of the form accountName/imagename:tag for images stored in Docker Hub or a fully qualified URI for a private registry like the Azure Container Registry.')
-param image string = 'mcr.microsoft.com/azuredocs/aci-helloworld'
 
-@description('Port to open on the container.')
-param port int = 80
-
-@description('The number of CPU cores to allocate to the container. Must be an integer.')
-param cpuCores int = 1
-
-@description('The amount of memory to allocate to the container in gigabytes.')
-param memoryInGb int = 2
-
-var networkProfileName = 'aci-networkProfile'
-var interfaceConfigName = 'eth0'
-var interfaceIpConfig = 'ipconfigprofile1'
-
-resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
-  name: vnetName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        vnetAddressPrefix
-      ]
-    }
+module jumpbox_deployment './deploy-vnet-with-jump-vm.bicep' = {
+  name: 'jumpbox_deployment'
+  params: {
+    location: location
+    adminPassword: adminPassword
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
-  name: subnetName
+resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
+  name: 'ContosoVnet'
+}
+
+resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
+  name: subnet1Name
   parent: vnet
+  dependsOn: [
+    jumpbox_deployment
+  ]
   properties: {
-    addressPrefix: subnetAddressPrefix
+    addressPrefix: subnet1Prefix
     delegations: [
       {
         name: 'DelegationService'
@@ -63,60 +44,13 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
   }
 }
 
-resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
-  name: networkProfileName
-  location: location
-  properties: {
-    containerNetworkInterfaceConfigurations: [
-      {
-        name: interfaceConfigName
-        properties: {
-          ipConfigurations: [
-            {
-              name: interfaceIpConfig
-              properties: {
-                subnet: {
-                  id: subnet.id
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
-  }
-}
 
-resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
-  name: containerGroupName
-  location: location
-  properties: {
-    containers: [
-      {
-        name: containerName
-        properties: {
-          image: image
-          ports: [
-            {
-              port: port
-              protocol: 'TCP'
-            }
-          ]
-          resources: {
-            requests: {
-              cpu: cpuCores
-              memoryInGB: memoryInGb
-            }
-          }
-        }
-      }
-    ]
-    osType: 'Linux'
-    networkProfile: {
-      id: networkProfile.id
-    }
-    restartPolicy: 'Always'
-  }
-}
 
-output containerIPv4Address string = containerGroup.properties.ipAddress.ip
+
+
+output vm string = jumpbox_deployment.outputs.hostname
+output vnet string = jumpbox_deployment.outputs.vnetName
+output subnet string = subnet1.name
+output subnetId string = subnet1.id
+
+

@@ -39,12 +39,29 @@ param cpuCores int = 4
 @description('The amount of memory to allocate to the container in gigabytes.')
 param memoryInGb int = 16
 
-// module vnet_deployment './deploy-vnet-with-jump-vm.bicep' = {
+@description('Name of the virtual machine.')
+param vmName string = 'jump-vm'
+
+module vnet_deployment './deploy-vnet-with-jump-vm-test.bicep' = {
+  name: 'vnet_deployment'
+  params: {
+    location: location
+    adminUsername: adminUsername
+    adminPassword: adminPassword
+    vnetName: vnetName
+    vnetAddressPrefix: vnetAddressPrefix
+    subnet1Name: subnet1Name
+    subnet1Prefix: subnet1Prefix
+    vmName: vmName
+  }
+}
+
+// module vnet_deployment './deploy-vnet.bicep' = {
 //   name: 'vnet_deployment'
 //   params: {
 //     location: location
-//     adminUsername: adminUsername
-//     adminPassword: adminPassword
+//     // adminUsername: adminUsername
+//     // adminPassword: adminPassword
 //     vnetName: vnetName
 //     vnetAddressPrefix: vnetAddressPrefix
 //     subnet1Name: subnet1Name
@@ -52,22 +69,12 @@ param memoryInGb int = 16
 //   }
 // }
 
-module vnet_deployment './deploy-vnet.bicep' = {
-  name: 'vnet_deployment'
-  params: {
-    location: location
-    // adminUsername: adminUsername
-    // adminPassword: adminPassword
-    vnetName: vnetName
-    vnetAddressPrefix: vnetAddressPrefix
-    subnet1Name: subnet1Name
-    subnet1Prefix: subnet1Prefix
-  }
-}
-
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: containerGroupName
   location: location
+  dependsOn: [
+    vnet_deployment
+  ]
   properties: {
     containers: [
       {
@@ -96,9 +103,14 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
       }
     ]
     osType: 'Linux'
+    // With this commented out, we can't get the containerGroup.properties.ipAddress.ip value
+    //  But this causes an error with the jump vm script
+    //  WHOOAA!!!  Without this the container-group doesn't GET an ip address!
     // networkProfile: {
-    //   id: vnet_deployment.outputs.networkProfileId 
+    //   //id: vnet_deployment.outputs.networkProfileId 
+      
     // }
+
     restartPolicy: 'Always'
   }
 }
@@ -106,4 +118,6 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
 //output qvera_ip_address string = containerGroup.properties.ipAddress.ip
 //output jump_vm_hostname string = vnet_deployment.outputs.hostname
 //output jump_vm_hostip string = vnet_deployment.outputs.hostip
+
+
 

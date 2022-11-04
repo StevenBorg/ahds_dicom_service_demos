@@ -54,7 +54,13 @@ param vnetAddressPrefix string = '10.0.0.0/16'
 param subnet1Prefix string = '10.0.0.0/24'
 
 @description('Subnet 1 Name')
-param subnet1Name string = 'jumpSubnet'
+param subnet1Name string = 'radiologySubnet'
+
+@description('Subnet 2 Prefix')
+param subnet2Prefix string = '10.0.1.0/24'
+
+@description('Subnet 1 Name')
+param subnet2Name string = 'jumpboxSubnet'
 
 var storageAccountName = 'bootdiags${uniqueString(resourceGroup().id)}'
 var nicName = 'myVMNic'
@@ -122,17 +128,66 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
         addressPrefix
       ]
     }
-    subnets: [
+    // subnets: [
+    //   {
+    //     name: subnet1Name
+    //     properties: {
+    //       addressPrefix: subnet1Prefix
+    //       // networkSecurityGroup: {
+    //       //   id: securityGroup.id
+    //       // }
+    //       delegations: [
+    //         {
+    //           name: 'DelegationService'
+    //           properties: {
+    //             serviceName: 'Microsoft.ContainerInstance/containerGroups'
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   }
+    //   {
+    //     name: subnet2Name
+    //     properties: {
+    //       addressPrefix: subnet2Prefix
+    //       networkSecurityGroup: {
+    //         id: securityGroup.id
+    //       }
+    //     }
+    //   }
+    // ]
+  }
+}
+
+resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
+  name: subnet1Name
+  parent: vnet
+  properties: {
+    addressPrefix: subnet1Prefix
+    delegations: [
       {
-        name: subnetName
+        name: 'DelegationService'
         properties: {
-          addressPrefix: subnetPrefix
-          networkSecurityGroup: {
-            id: securityGroup.id
-          }
+          serviceName: 'Microsoft.ContainerInstance/containerGroups'
         }
       }
     ]
+  }
+}
+
+resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
+  name: subnet2Name
+  parent: vnet
+  dependsOn: [
+    subnet1
+    nic
+  ]
+  properties: {
+    addressPrefix: subnet2Prefix
+    networkSecurityGroup: {
+      id: securityGroup.id
+    }
+    
   }
 }
 
@@ -149,7 +204,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
             id: pip.id
           }
           subnet: {
-            id: resourceId('Microsoft.Network/virtualNetworks/subnets', vnet.name, subnetName)
+            id: resourceId('Microsoft.Network/virtualNetworks/subnets', vnet.name, subnet2Name)
           }
         }
       }
@@ -210,6 +265,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
 // resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
 //   name: networkProfileName
 //   location: location
+//   dependsOn: [
+//     vnet
+//   ]
 //   properties: {
 //     containerNetworkInterfaceConfigurations: [
 //       {
@@ -220,7 +278,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
 //               name: interfaceIpConfig
 //               properties: {
 //                 subnet: {
-//                   id: vnet.properties.subnets[0].id 
+//                   id: vnet.properties.subnets[1].id
 //                 }
 //               }
 //             }
@@ -238,7 +296,7 @@ output vnetAddressPrefix string = addressPrefix
 output vnetId string = vnet.id
 output subnetName string = vnet.properties.subnets[0].name //subnet.name
 output subnetId string = vnet.properties.subnets[0].id
-output subnetAddressPrefix string = subnetPrefix
+output subnetAddressPrefix string = subnet2Prefix
 // output networkProfileName string = networkProfile.name
 // output networkProfileId string = networkProfile.id
 //output foo string = vnet.properties.subnets[0].properties.ipConfigurationProfiles[0].id
