@@ -1,2 +1,0 @@
-FROM qvera/qie
-COPY orthanc.json /etc/orthanc/

@@ -3,18 +3,36 @@ Deployment demos for the Azure Health Data Service (AHDS) DICOM service
 
 This is very much a messy work in process.  I'm keeping notes here, extra files, etc. In other words, don't think this repo is cleanly usable.
 
+## Requirements
 ### App Registration
 For nearly every demo environment deployed here, you will need an App Registration, and information. There are several ways to approach the problem, but for these demos, we will assume that you have created the appropriate app registration.  
 
 The following document provides guidance: https://learn.microsoft.com/en-us/azure/healthcare-apis/register-application-cli-rest 
 
-
 Demo walkthrough (only Microsoft): https://microsoft.sharepoint.com/:w:/t/ProjectResolute/EfR03qdjIOpJqapRROvaNUABykS9MhKGGjYc5MO55Qn57w?e=fpqPpa&isSPOFile=1&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjEwMjgwNzIwMCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D 
 
+### Azure Command Line (or Powershell)
+Many of these demos depend a local installation of the ACL in order to deploy Bicep files. Additionally, if you're using VS Code, I highly recommend the Bicep extension.
+
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install
+- https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep
+
+### Docker 
+To build any of the DICOM files to run locally, or to rebuild the Docker files used, you'll need Docker installed and access to the Docker command line. Docker Desktop is no longer free for everyone, but is one of the more common tools. 
+
+- Docker Desktop: https://www.docker.com/products/docker-desktop/
 
 
+## RSNA Demo
+The RSNA demo is a work in process. Here's where it stands.
 
+To deploy the AHDS DICOM service with OHIF, run the following commands.
 
+To deploy the on-premises infrastructure run the following commands from an ACI command line in the /bicep subdirectory of the cloned git repo:
+
+`az group create --location eastus --name uniqueResourceGroupName`
+
+`az deployment group create --template-file .\deploy-qvera-on-subnet.bicep --resource-group uniqueResourceGroupName`
 
 
 

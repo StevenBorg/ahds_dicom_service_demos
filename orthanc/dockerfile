@@ -1,2 +1,6 @@
-FROM osimis/orthanc
-COPY orthanc.json /etc/orthanc/
+FROM osimis/orthanc:22.6.1-full
+
+ENV ORTHANC__NAME="My Orthanc"
+ENV ORTHANC__REGISTERED_USERS: {"demo": "demo"}
+
+VOLUME /var/lib/orthanc/db:Z

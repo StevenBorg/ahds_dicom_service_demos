@@ -25,10 +25,10 @@ param image string = 'qvera/qie:5.0.50'
 param port int = 80
 
 @description('The number of CPU cores to allocate to the container. Must be an integer.')
-param cpuCores int = 4
+param cpuCores int = 2 //4
 
 @description('The amount of memory to allocate to the container in gigabytes.')
-param memoryInGb int = 16
+param memoryInGb int = 8 //16
 
 @description('Vnet name')
 param vnet_name string = 'ContosoVnet'
@@ -83,14 +83,43 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
           ]
           environmentVariables: [
             {
-              name: 'testEnvVar'
-              value: 'testvalueEnvVar'
+              name: 'JAVA_OPTIONS'
+              value: 'Xmx4096m'
+            }
+            {
+              name: 'connection_driver'
+              value: 'org.mariadb.jdbc.Driver'
+            }
+            {
+              name: 'connection_url'
+              value: 'jdbc:mariadb'
+            }
+            {
+              name: 'connection_username'
+              value: 'root'
+            }
+            {
+              name: 'connection_password'
+              value: 'root'
+            }
+            {
+              name: 'hibernate_dialect'
+              value: 'com.qvera.qie.persistence.MariaDB103UnicodeDialect'
+            }
+            {
+              name: 'qie_haEngine'
+              value: 'EnterpriseHAServiceImpl'
             }
           ]
           volumeMounts: [
             {
               name: 'myvolume'
               mountPath: '/tmp/database/'
+            }
+            {
+              name: 'mariadbbackup'
+              mountPath: '/java/qie/backup/'
+
             }
           ]
           resources: {
@@ -101,40 +130,48 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
           }
         }
       }
-      // {
-      //   name: 'MariaDb'
-      //   properties: {
-      //     image: 'mariadb:10.5.1'
-      //     ports: [
-      //       {
-      //         port: 3310
-      //         protocol: 'TCP'
-      //       }
-      //     ]
-      //     environmentVariables: [
-      //       {
-      //         name: 'MYSQL_DATABASE'
-      //         value: 'qie'
-      //       }
-      //       {
-      //         name: 'MYSQL_ROOT_PASSWORD'
-      //         value: 'root'
-      //       }
-      //     ]
-      //     volumeMounts: [
-      //       {
-      //         name: 'myvolume'
-      //         mountPath: '/tmp/database/'
-      //       }
-      //     ]
-      //     resources: {
-      //       requests: {
-      //         cpu: 2
-      //         memoryInGB: 8
-      //       }
-      //     }
-      //   }
-      // }
+      {
+        name: 'mariadb'
+        properties: {
+          image: 'mariadb:10.5.1'
+          ports: [
+            {
+              port: 3310
+              protocol: 'TCP'
+            }
+          ]
+          environmentVariables: [
+            {
+              name: 'MYSQL_DATABASE'
+              value: 'qie'
+            }
+            {
+              name: 'MYSQL_ROOT_PASSWORD'
+              value: 'root'
+            }
+          ]
+          volumeMounts: [
+            {
+              name: 'myvolume'
+              mountPath: '/tmp/config/'
+            }
+            {
+              name: 'mariadbvolume'
+              mountPath: '/var/lib/mysql/'
+
+            }
+          ]
+          resources: {
+            requests: {
+              cpu: 2
+              memoryInGB: 4
+            }
+          }
+          command: [
+            '--init-file=/tmp/database/create_db.sql'
+          ]
+        }
+      }
     ]
     volumes: [
       {
@@ -144,6 +181,15 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
           directory: '.'
         } 
       }
+      {
+        name: 'mariadbvolume'
+        emptyDir: {}
+      }
+      {
+        name: 'mariadbbackup'
+        emptyDir: {}
+      }
+
     ]
     osType: 'Linux'
     // With this commented out, we can't get the containerGroup.properties.ipAddress.ip value
