@@ -113,7 +113,6 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
               protocol: 'TCP'
             }
           ]
-          ]
           resources: {
             requests: {
               cpu: cpuCores
@@ -121,13 +120,13 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
             }
           }
         }
-      } }
+      } 
     ]
     volumes: [
       {
         name: 'myvolume'
         gitRepo: {
-          repository: 'https://github.com/StevenBorg/ahds_dicom_service_demos/tree/main/qvera/mariadb-init'
+          repository: 'https://github.com/StevenBorg/ahds_demo_config'
           directory: '.'
         } 
       }

@@ -6,7 +6,7 @@ Open up Powershell, ensuring you have the Azure CLI installed
 Azure CLI:
 az login
 az account set -s "Resolute Sandbox"  
-az group create --name sjbDeleteMe60 --location eastus
+az group create --location eastus --name sjbDeleteMe60 
 az deployment group create --template-file .\deploy-dicom-service.bicep --resource-group sjbDeleteMe60
 
 
