@@ -113,17 +113,6 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
               protocol: 'TCP'
             }
           ]
-          environmentVariables: [
-            {
-              name: 'testEnvVar'
-              value: 'testvalueEnvVar'
-            }
-          ]
-          volumeMounts: [
-            {
-              name: 'myvolume'
-              mountPath: '/tmp/database/'
-            }
           ]
           resources: {
             requests: {
@@ -132,41 +121,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
             }
           }
         }
-      }
-      // {
-      //   name: 'MariaDb'
-      //   properties: {
-      //     image: 'mariadb:10.5.1'
-      //     ports: [
-      //       {
-      //         port: 3310
-      //         protocol: 'TCP'
-      //       }
-      //     ]
-      //     environmentVariables: [
-      //       {
-      //         name: 'MYSQL_DATABASE'
-      //         value: 'qie'
-      //       }
-      //       {
-      //         name: 'MYSQL_ROOT_PASSWORD'
-      //         value: 'root'
-      //       }
-      //     ]
-      //     volumeMounts: [
-      //       {
-      //         name: 'myvolume'
-      //         mountPath: '/tmp/database/'
-      //       }
-      //     ]
-      //     resources: {
-      //       requests: {
-      //         cpu: 2
-      //         memoryInGB: 8
-      //       }
-      //     }
-      //   }
-      // }
+      } }
     ]
     volumes: [
       {

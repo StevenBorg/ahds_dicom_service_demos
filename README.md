@@ -26,13 +26,17 @@ To build any of the DICOM files to run locally, or to rebuild the Docker files u
 ## RSNA Demo
 The RSNA demo is a work in process. Here's where it stands.
 
-To deploy the AHDS DICOM service with OHIF, run the following commands.
+To deploy the AHDS DICOM service with OHIF, run the following command:
+
+`tbd`
 
 To deploy the on-premises infrastructure run the following commands from an ACI command line in the /bicep subdirectory of the cloned git repo:
 
 `az group create --location eastus --name uniqueResourceGroupName`
 
-`az deployment group create --template-file .\deploy-qvera-on-subnet.bicep --resource-group uniqueResourceGroupName`
+`az deployment group create --template-file .\deploy-qvera-on-subnet-5.0.50.bicep --resource-group uniqueResourceGroupName`
+
+Today, this results in a vnet, 2 subnets, 1 VM for jump box to remote into Port 4545, and 1 containerized instance of Qvera QIE 5.0.50.
 
 
 
