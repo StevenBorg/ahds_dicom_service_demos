@@ -24,7 +24,9 @@ To build any of the DICOM files to run locally, or to rebuild the Docker files u
 
 
 ## RSNA Demo
-The RSNA demo is a work in process. Here's where it stands.
+The RSNA demo is a work in process. Go to demos/rsna and reference the readme.md there!
+
+--- Nothing below this line applies right now --
 
 To deploy the AHDS DICOM service with OHIF, run the following command:
 
