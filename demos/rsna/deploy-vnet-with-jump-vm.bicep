@@ -205,6 +205,16 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
   }
 }
 
+// resource vm_run_cmd 'Microsoft.Compute/virtualMachines/runCommands@2022-08-01' = {
+//   name: '${vmName}/setrdpport'
+//   location: location
+//   properties: {
+//     source: VirtualMachineRunCommandScriptSource
+
+
+//   }
+// }
+
 // // Network profiles are automatically created, but it was in the demo, so I copied it over...
 // resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
 //   name: networkProfileName
