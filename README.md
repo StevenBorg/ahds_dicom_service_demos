@@ -3,6 +3,10 @@ Deployment demos for the Azure Health Data Service (AHDS) DICOM service
 
 This is very much a messy work in process.  I'm keeping notes here, extra files, etc. In other words, don't think this repo is cleanly usable.
 
+The RSNA demo is a work in process. Go to demos/rsna and reference the readme.md there!
+
+--- Nothing below this line applies right now --
+
 ## Requirements
 ### App Registration
 For nearly every demo environment deployed here, you will need an App Registration, and information. There are several ways to approach the problem, but for these demos, we will assume that you have created the appropriate app registration.  
