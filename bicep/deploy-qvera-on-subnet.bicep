@@ -13,7 +13,7 @@ param subnet1Prefix string = '10.0.1.0/24'
 param subnet1Name string = 'qveraSubnet'
 
 @description('Container group name')
-param containerGroupName string = 'contoso-containergroup'
+param containerGroupName string = 'contoso-qvera-containergroup'
 
 @description('Container name')
 param containerName string = 'qie-container'
@@ -71,65 +71,65 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
   ]
   properties: {
     containers: [
-      {
-        name: containerName
-        properties: {
-          image: image
-          ports: [
-            {
-              port: port
-              protocol: 'TCP'
-            }
-          ]
-          environmentVariables: [
-            {
-              name: 'JAVA_OPTIONS'
-              value: 'Xmx4096m'
-            }
-            {
-              name: 'connection_driver'
-              value: 'org.mariadb.jdbc.Driver'
-            }
-            {
-              name: 'connection_url'
-              value: 'jdbc:mariadb'
-            }
-            {
-              name: 'connection_username'
-              value: 'root'
-            }
-            {
-              name: 'connection_password'
-              value: 'root'
-            }
-            {
-              name: 'hibernate_dialect'
-              value: 'com.qvera.qie.persistence.MariaDB103UnicodeDialect'
-            }
-            {
-              name: 'qie_haEngine'
-              value: 'EnterpriseHAServiceImpl'
-            }
-          ]
-          volumeMounts: [
-            {
-              name: 'myvolume'
-              mountPath: '/tmp/database/'
-            }
-            {
-              name: 'mariadbbackup'
-              mountPath: '/java/qie/backup/'
+      // {
+      //   name: containerName
+      //   properties: {
+      //     image: image
+      //     ports: [
+      //       {
+      //         port: port
+      //         protocol: 'TCP'
+      //       }
+      //     ]
+      //     environmentVariables: [
+      //       {
+      //         name: 'JAVA_OPTIONS'
+      //         value: '-Xmx4096m'
+      //       }
+      //       {
+      //         name: 'connection_driver'
+      //         value: 'org.mariadb.jdbc.Driver'
+      //       }
+      //       {
+      //         name: 'connection_url'
+      //         value: 'jdbc:mariadb://10.0.1.4:3306/qie'
+      //       }
+      //       {
+      //         name: 'connection_username'
+      //         value: 'root'
+      //       }
+      //       {
+      //         name: 'connection_password'
+      //         value: 'root'
+      //       }
+      //       {
+      //         name: 'hibernate_dialect'
+      //         value: 'com.qvera.qie.persistence.MariaDB103UnicodeDialect'
+      //       }
+      //       {
+      //         name: 'qie_haEngine'
+      //         value: 'EnterpriseHAServiceImpl'
+      //       }
+      //     ]
+      //     volumeMounts: [
+      //       {
+      //         name: 'myvolume'
+      //         mountPath: '/tmp/database/'
+      //       }
+      //       {
+      //         name: 'mariadbbackup'
+      //         mountPath: '/java/qie/backup/'
 
-            }
-          ]
-          resources: {
-            requests: {
-              cpu: cpuCores
-              memoryInGB: memoryInGb
-            }
-          }
-        }
-      }
+      //       }
+      //     ]
+      //     resources: {
+      //       requests: {
+      //         cpu: cpuCores
+      //         memoryInGB: memoryInGb
+      //       }
+      //     }
+      //   }
+      // }
       {
         name: 'mariadb'
         properties: {

@@ -1,2 +1,2 @@
 FROM qvera/qie:5.0.50
-
+COPY ../mariadb-init 

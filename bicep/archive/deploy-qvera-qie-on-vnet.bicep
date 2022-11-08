@@ -22,7 +22,7 @@ param subnet1Name string = 'radiologySubnet'
 param location string = resourceGroup().location
 
 @description('Container group name')
-param containerGroupName string = 'contoso-containergroup'
+param containerGroupName string = 'contoso-qvera-containergroup'
 
 @description('Container name')
 param containerName string = 'qie-container'

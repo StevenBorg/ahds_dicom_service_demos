@@ -1,16 +1,8 @@
-@description('Password for the Virtual Machine.')
-@minLength(12)
-@secure()
-param adminPassword string
-
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
-@description('Subnet 1 Prefix')
-param subnet1Prefix string = '10.0.1.0/24'
-
-@description('Subnet 1 Name')
-param subnet1Name string = 'qveraSubnet'
+@description('Vnet Name')
+param vnetName string
 
 @description('Container group name')
 param containerGroupName string = 'contoso-qvera-containergroup'
@@ -30,34 +22,27 @@ param cpuCores int = 4
 @description('The amount of memory to allocate to the container in gigabytes.')
 param memoryInGb int = 16
 
+@description('Subnet Prefix')
+param subnetPrefix string = '10.0.1.0/24'
 
+@description('Subnet Name')
+param subnetName string = 'qveraSubnet'
 
-var networkProfileName = 'aci-networkProfile'
-var interfaceConfigName = 'eth0'
-var interfaceIpConfig = 'ipconfigprofile1'
-
-
-
-module jumpbox_deployment './deploy-vnet-with-jump-vm.bicep' = {
-  name: 'jumpbox_deployment'
-  params: {
-    location: location
-    adminPassword: adminPassword
-  }
-}
-
+// This defines a resource for an EXISTING vnet! (must already exist)
 resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
-  name: 'ContosoVnet'
+  name: vnetName
 }
 
-resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
-  name: subnet1Name
+var networkProfileName = '${subnetName}-networkProfile' //'aci-networkProfile'
+var interfaceConfigName = '${subnetName}-eth0'
+var interfaceIpConfig = '${subnetName}-ipconfigprofile1'
+
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2020-11-01' = {
+  name: subnetName
   parent: vnet
-  dependsOn: [
-    jumpbox_deployment
-  ]
   properties: {
-    addressPrefix: subnet1Prefix
+    addressPrefix: subnetPrefix
     delegations: [
       {
         name: 'DelegationService'
@@ -83,7 +68,7 @@ resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
               name: interfaceIpConfig
               properties: {
                 subnet: {
-                  id: subnet1.id
+                  id: subnet.id
                 }
               }
             }
@@ -94,12 +79,36 @@ resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
   }
 }
 
-resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
+
+
+
+// //Create a subnet for qvera on existing vnet
+// module add_subnet './add-subnet-for-containters-to-existing-vnet.bicep' = {
+//   name: 'qvera_subnet'
+//   dependsOn: [
+//     vnet
+//   ]
+//   params: {
+//     location: location
+//     vnet_name: vnetName
+//     subnetName: subnetName
+//     subnetPrefix: subnetPrefix
+//     delegations: [
+//       {
+//         name: 'DelegationService'
+//         properties: {
+//           serviceName: 'Microsoft.ContainerInstance/containerGroups'
+//         }
+//       }      
+//     ]
+//   }
+// }
+
+resource qveraContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: containerGroupName
   location: location
   dependsOn: [
-    jumpbox_deployment
-    subnet1
+    subnet
   ]
   properties: {
     containers: [
@@ -136,17 +145,19 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
     //  But this causes an error with the jump vm script
     //  WHOOAA!!!  Without this the container-group doesn't GET an ip address!
     networkProfile: {
-      id: networkProfile.id
-      
+      id: networkProfile.id   
     }
-
     restartPolicy: 'Always'
   }
 }
 
-output vm string = jumpbox_deployment.outputs.hostname
-output vnet string = jumpbox_deployment.outputs.vnetName
-output subnetName string = subnet1.name
-output subnetId string = subnet1.id
 
+//output vm string = jumpbox_deployment.outputs.hostname
+//output vnet string = jumpbox_deployment.outputs.vnetName
+//output qveraSubnetName string = add_subnet.outputs.subnetName
+//output qveraSubnetId string = add_subnet.outputs.subnetId
 
+output subnetName string = subnet.name
+output subnetId string = subnet.id
+output networkProfileName string = networkProfile.name
+output networkProfileId string = networkProfile.id

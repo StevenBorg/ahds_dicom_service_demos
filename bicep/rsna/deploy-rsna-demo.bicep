@@ -1,3 +1,6 @@
+// This script deploys the on-prem solution 
+
+
 @description('Password for the Virtual Machine.')
 @minLength(12)
 @secure()
@@ -26,17 +29,38 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
   name: jumpbox_deployment.outputs.vnetName    
 }
 
-// Deploy the jumpbox and vnet
-module qvera_subnet './add-subnet-for-containters-to-existing-vnet.bicep' = {
+// Deploy qvera into a new subnet
+module qvera_subnet './deploy-qvera-subnet.bicep' = {
   name: 'qvera_subnet'
   dependsOn: [
     vnet
   ]
   params: {
     location: location
+    vnetName: jumpbox_deployment.outputs.vnetName
+    containerName: 'qie-container'
+    cpuCores: 4
+    memoryInGb: 8
     subnetName: 'qveraSubnet'
     subnetPrefix: '10.0.1.0/24'
-    vnet_name: vnetName
   }
 }
 
+// Deploy qvera into a new subnet
+module orthanc_subnet './deploy-orthanc-subnet.bicep' = {
+  name: 'orthanc_subnet'
+  dependsOn: [
+    vnet
+    qvera_subnet
+  ]
+  params: {
+    location: location
+    vnetName: jumpbox_deployment.outputs.vnetName
+    containerName: 'orthanc-container'
+    cpuCores: 2
+    memoryInGb: 4
+    subnetName: 'orthancSubnet'
+    subnetPrefix: '10.0.2.0/24'
+
+  }
+}

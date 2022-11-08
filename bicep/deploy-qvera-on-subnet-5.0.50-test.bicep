@@ -16,7 +16,7 @@ param qveraSubnetPrefix string = '10.0.1.0/24'
 param qveraSubnetName string = 'qveraSubnet'
 
 @description('Container group name')
-param qveraContainerGroupName string = 'contoso-containergroup'
+param qveraContainerGroupName string = 'contoso-qvera-containergroup'
 
 @description('Container name')
 param containerName string = 'qie-container'
