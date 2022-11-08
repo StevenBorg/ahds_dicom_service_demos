@@ -61,5 +61,5 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
   - When prompted to change your password, choose one you can remember.
   - When prompted to enter your License, refer to the email you received when you signed up for an account. Enter both the License ID and the Activation Code, and click *Get License*
 - Connect to Orthanc
-  - Using Edge, navigate to `http://10.0.1.4:8042` 
+  - Using Edge, navigate to `http://10.0.2.4:8042` 
   - Enter `orthanc` as username and `orthanc` as password.
