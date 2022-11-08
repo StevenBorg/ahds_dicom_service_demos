@@ -9,7 +9,7 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 ## Steps
 - Create the Azure environment. This can be done in one of two ways. You can use the Bicep command line, which is easiest if you are running this repo multiple times for development. Or you can use the Azure Portal user experience, which is easiest for a one-off deployment. Both create identical environments.
 - Azure Portal
-  - Click ![Deploy to Azure](https://aka.ms/deploytoazurebutton)
+  - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/deploy-rsna-demo.json)
   - 
 - Clone this repo
 - Open a command line that has Azure CLI support and navigate to this folder (`./ahds_dicom_service_demos/demos/rsna)
