@@ -8,21 +8,26 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 
 ## Steps
 - Create the Azure environment. This can be done in one of two ways. You can use the Bicep command line, which is easiest if you are running this repo multiple times for development. Or you can use the Azure Portal user experience, which is easiest for a one-off deployment. Both create identical environments.
-- Azure Portal
-  - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo.json)
-  - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo2.json)
-
-
-  - https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/deploy-rsna-demo.json
-- Clone this repo
-- Open a command line that has Azure CLI support and navigate to this folder (`./ahds_dicom_service_demos/demos/rsna)
-- Type the following commands:
-  - `az login`
-  - `az account set -s "<desired Azure Subscription Name>"  `
-  - `az group create --location eastus --name yourUniqueResourceGroupName `
-  - `az deployment group create --template-file .\deploy-rsna-demo.bicep --resource-group yourUniqueResourceGroupName`
-- Enter a complex password that will be used later to log into the Jump-VM virtual machine that will be created
-- Wait until you have a successful deployment
+  - Azure Portal
+    - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo.json)
+    - Fill in required information
+      - Select an Azure subscription
+      - Create a new Resource Group
+      - Select an Azure region 
+      - Enter a complex password to be used to log into the Jump-VM virtual machine later
+      - Click *Review + create*
+      - Click *Create*
+      - ![Steps to deploy using the Portal](../../readme-images/steps-deploy-infra-using-portal.png "Steps to deploy using the Portal").
+  - ACI command line with Bicep
+    - Clone this repo
+    - Open a command line that has Azure CLI support and navigate to this folder (`./ahds_dicom_service_demos/demos/rsna)
+    - Type the following commands:
+      - `az login`
+      - `az account set -s "<desired Azure Subscription Name>"  `
+      - `az group create --location eastus --name yourUniqueResourceGroupName `
+      - `az deployment group create --template-file .\deploy-rsna-demo.bicep --resource-group yourUniqueResourceGroupName`
+    - Enter a complex password that will be used later to log into the Jump-VM virtual machine that will be created
+    - Wait until you have a successful deployment
 - Open https://portal.azure.com and navigate to the Overview section of resource group you just created.
 - In the list of created resources, click on the *jump-vm* virtual machine.
 - Configure Remote Desktop
