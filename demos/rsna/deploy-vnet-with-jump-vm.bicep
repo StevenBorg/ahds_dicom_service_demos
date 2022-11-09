@@ -201,6 +201,26 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
   }
 }
 
+resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
+  name: 'changeRdpPort'
+  parent: vm
+  location: location
+  properties: {
+     type: 'CustomScriptExtension'
+     publisher: 'Microsoft.Compute'
+     settings: {
+      fileUris: ''
+     }
+     protectedSettings: {
+      commandToExecute: 'myExecutionCommand'
+    
+
+     }
+     
+  }
+}
+
+
 // resource vm_run_cmd 'Microsoft.Compute/virtualMachines/runCommands@2022-08-01' = {
 //   name: '${vmName}/setrdpport'
 //   location: location
