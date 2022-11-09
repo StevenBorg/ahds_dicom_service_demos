@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  qie:
+    image: qvera/qie:latest
+    volumes:
+      - ./qie_backup:/java/qie/backup:rw
+    environment:
+      JAVA_OPTIONS: -Xmx4096m
+      connection.driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      connection.url: jdbc:sqlserver://4y2pp36uxtzrg.database.windows.net:1433;database=qie;integratedSecurity=false
+      connection.username: student@4y2pp36uxtzrg
+      connection.password: R@diologyR0cks!
+      hibernate.dialect: com.qvera.qie.persistence.SQLServer2019UnicodeDialect
+      qie.haEngine: EnterpriseHAServiceImpl
+    stop_grace_period: 5m
+    ports:
+      - 8081:80
+      - 1433:1433
+

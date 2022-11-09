@@ -63,6 +63,10 @@ var subnetName = subnet1Name
 var subnetPrefix = subnet1Prefix
 var networkSecurityGroupName = 'default-NSG'
 
+var networkProfileName = 'aci-networkProfile'
+var interfaceConfigName = 'eth0'
+var interfaceIpConfig = 'ipconfigprofile1'
+
 resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
   location: location

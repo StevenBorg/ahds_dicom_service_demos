@@ -1,4 +1,4 @@
-@description('Password for the Virtual Machine.')
+@description('Admin password for SQL.')
 @minLength(12)
 @secure()
 param adminPassword string
@@ -22,16 +22,16 @@ param containerGroupName string = 'contoso-qvera-containergroup'
 param containerName string = 'qie-container'
 
 @description('Container image to deploy. Should be of the form accountName/imagename:tag for images stored in Docker Hub or a fully qualified URI for a private registry like the Azure Container Registry.')
-param image string = 'qvera/qie:5.0.50'
+param image string = 'qvera/qie:latest'
 
 @description('Port to open on the container.')
 param port int = 80
 
 @description('The number of CPU cores to allocate to the container. Must be an integer.')
-param cpuCores int = 2 //4
+param cpuCores int = 4 //4
 
 @description('The amount of memory to allocate to the container in gigabytes.')
-param memoryInGb int = 8 //16
+param memoryInGb int = 16 //16
 
 @description('Vnet name')
 param vnet_name string = 'ContosoVnet'
@@ -75,9 +75,6 @@ module sql './create-sql-db-for-qie.bicep' = {
   }
 }
 
-var jdbcConnString = 'jdbc:sqlserver://${sql.outputs.sqlServerName}.database.windows.net:1433;database=${sql.outputs.dbName};user=${administratorLogin}@${sql.outputs.sqlServerName};password=${adminPassword};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;'
-
-
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: containerGroupName
   location: location
@@ -88,125 +85,65 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01'
   ]
   properties: {
     containers: [
-      // {
-      //   name: containerName
-      //   properties: {
-      //     image: image
-      //     ports: [
-      //       {
-      //         port: port
-      //         protocol: 'TCP'
-      //       }
-      //     ]
-      //     environmentVariables: [
-      //       {
-      //         name: 'JAVA_OPTIONS'
-      //         value: '-Xmx4096m'
-      //       }
-      //       {
-      //         name: 'connection_driver'
-      //         value: 'org.mariadb.jdbc.Driver'
-      //       }
-      //       {
-      //         name: 'connection_url'
-      //         value: 'jdbc:mariadb://10.0.1.4:3306/qie'
-      //       }
-      //       {
-      //         name: 'connection_username'
-      //         value: 'root'
-      //       }
-      //       {
-      //         name: 'connection_password'
-      //         value: 'root'
-      //       }
-      //       {
-      //         name: 'hibernate_dialect'
-      //         value: 'com.qvera.qie.persistence.MariaDB103UnicodeDialect'
-      //       }
-      //       {
-      //         name: 'qie_haEngine'
-      //         value: 'EnterpriseHAServiceImpl'
-      //       }
-      //     ]
-      //     volumeMounts: [
-      //       {
-      //         name: 'myvolume'
-      //         mountPath: '/tmp/database/'
-      //       }
-      //       {
-      //         name: 'mariadbbackup'
-      //         mountPath: '/java/qie/backup/'
-
-      //       }
-      //     ]
-      //     resources: {
-      //       requests: {
-      //         cpu: cpuCores
-      //         memoryInGB: memoryInGb
-      //       }
-      //     }
-      //   }
-      // }
       {
-        name: 'mariadb'
+        name: containerName
         properties: {
-          image: 'mariadb:10.5.1'
+          image: image
           ports: [
             {
-              port: 3310
+              port: port
               protocol: 'TCP'
             }
           ]
           environmentVariables: [
             {
-              name: 'MYSQL_DATABASE'
-              value: 'qie'
+              name: 'JAVA_OPTIONS'
+              value: '-Xmx4096m'
             }
             {
-              name: 'MYSQL_ROOT_PASSWORD'
-              value: 'root'
+              name: 'connection_driver'
+              value: 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+            }
+            {
+              name: 'connection_url'
+              value: 'jdbc:sqlserver://${sql.outputs.sqlServerName}.database.windows.net:1433;database=qie;integratedSecurity=false'
+            }
+            {
+              name: 'connection_username'
+              value: 'student@${sql.outputs.sqlServerName}'
+            }
+            {
+              name: 'connection_password'
+              value: adminPassword
+            }
+            {
+              name: 'hibernate_dialect'
+              value: 'com.qvera.qie.persistence.SQLServer2019UnicodeDialect'
             }
           ]
           volumeMounts: [
             {
-              name: 'myvolume'
-              mountPath: '/tmp/config/'
-            }
-            {
-              name: 'mariadbvolume'
-              mountPath: '/var/lib/mysql/'
-
+              name: 'copygitrepo'
+              mountPath: '/tmp/database/'
             }
           ]
           resources: {
             requests: {
-              cpu: 2
-              memoryInGB: 4
+              cpu: cpuCores
+              memoryInGB: memoryInGb
             }
           }
-          command: [
-            '--init-file=/tmp/database/create_db.sql'
-          ]
         }
       }
     ]
     volumes: [
       {
-        name: 'myvolume'
+        name: 'copygitrepo'
         gitRepo: {
           repository: 'https://github.com/StevenBorg/ahds_demo_config'
           directory: '.'
         } 
       }
-      {
-        name: 'mariadbvolume'
-        emptyDir: {}
-      }
-      {
-        name: 'mariadbbackup'
-        emptyDir: {}
-      }
-
     ]
     osType: 'Linux'
     // With this commented out, we can't get the containerGroup.properties.ipAddress.ip value

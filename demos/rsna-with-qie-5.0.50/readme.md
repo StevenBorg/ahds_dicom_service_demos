@@ -2,7 +2,7 @@
 This demo script deploys a simulated on-premises infrastructure that includes a PACS (Orthanc), simulated modalities (TBD), and a DICOM router (Qvera QIE).
 
 ## Prerequisites
-- Azure CLI that includes Bicep support, if using CLI instead of Portal to deploy infrastructure
+- Azure CLI that includes Bicep support
 - Qvera QIE license
   - A 90-day trial license is easily available at https://www.qvera.com/hl7-interface-engine/#get-started-section. Scroll down to click the **Start a Free 90-day Trial** button, enter some information, and a key will be emailed immediately to your account.
 

@@ -38,8 +38,6 @@ module qvera_subnet './deploy-qvera-subnet.bicep' = {
   params: {
     location: location
     vnetName: jumpbox_deployment.outputs.vnetName
-    adminPassword: adminPassword
-    adminLogin: 'student'
     containerName: 'qie-container'
     cpuCores: 4
     memoryInGb: 8
