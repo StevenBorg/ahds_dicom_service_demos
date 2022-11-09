@@ -201,24 +201,25 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
   }
 }
 
-resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
-  name: 'changeRdpPort'
-  parent: vm
-  location: location
-  properties: {
-     type: 'CustomScriptExtension'
-     publisher: 'Microsoft.Compute'
-     settings: {
-      fileUris: ''
-     }
-     protectedSettings: {
-      commandToExecute: 'myExecutionCommand'
-    
-
-     }
+// resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
+//   name: 'changeRdpPort'
+//   parent: vm
+//   location: location
+//   properties: {
+//     type: 'CustomScriptExtension'
+//     publisher: 'Microsoft.Compute'
+//     typeHandlerVersion: '1.10'
+//     settings: {
+//       fileUris: [
+//         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1'
+//       ]  
+//     }
+//      protectedSettings: {
+//       commandToExecute: 'change-rdp-port.ps1'
+//      }
      
-  }
-}
+//   }
+// }
 
 
 // resource vm_run_cmd 'Microsoft.Compute/virtualMachines/runCommands@2022-08-01' = {
