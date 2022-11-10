@@ -36,7 +36,11 @@ param OSoffer string = 'Windows-10'
 param OSpublisher string = 'MicrosoftWindowsDesktop' 
 
 @description('Size of the virtual machine.')
-param vmSize string = 'Standard_D2s_v5'
+@allowed([
+  'Standard_DS1_v2'
+  'Standard_D2s_v5'
+])
+param vmSize string = 'Standard_DS1_v2' //'Standard_D2s_v5'
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
