@@ -14,7 +14,7 @@ param vnetName string = 'ContosoVnet'
 
 
 // Deploy the jumpbox and vnet
-module jumpbox_deployment './deploy-vnet-with-jump-vm.bicep' = {
+module jumpbox_deployment '../rsna/deploy-vnet-with-jump-vm.bicep' = {
   name: 'jumpbox_deployment'
   params: {
     location: location
@@ -30,7 +30,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
 }
 
 // Deploy qvera into a new subnet
-module qvera_subnet './deploy-qvera-subnet.bicep' = {
+module qvera_subnet '../rsna/deploy-qvera-subnet.bicep' = {
   name: 'qvera_subnet'
   dependsOn: [
     vnet
@@ -49,7 +49,7 @@ module qvera_subnet './deploy-qvera-subnet.bicep' = {
 }
 
 // Deploy orthanc into a new subnet
-module orthanc_subnet './deploy-orthanc-subnet.bicep' = {
+module orthanc_subnet './deploy-orthanc-subnet-shared-db.bicep' = {
   name: 'orthanc_subnet'
   dependsOn: [
     vnet
