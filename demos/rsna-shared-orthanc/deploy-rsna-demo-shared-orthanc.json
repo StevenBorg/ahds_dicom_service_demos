@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "3162803276513293777"
+      "templateHash": "16781957181523072834"
     }
   },
   "parameters": {
@@ -21,13 +21,6 @@
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "Location for all resources."
-      }
-    },
-    "vnetName": {
-      "type": "string",
-      "defaultValue": "ContosoVnet",
-      "metadata": {
-        "description": "Subnet 1 Name"
       }
     }
   },
@@ -49,7 +42,7 @@
             "value": "[parameters('adminPassword')]"
           },
           "vnetName": {
-            "value": "[parameters('vnetName')]"
+            "value": "ContosoVnet"
           },
           "adminUsername": {
             "value": "student"
@@ -62,7 +55,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "11963254969938421140"
+              "templateHash": "17950818720740043376"
             }
           },
           "parameters": {
@@ -139,7 +132,11 @@
             },
             "vmSize": {
               "type": "string",
-              "defaultValue": "Standard_D2s_v5",
+              "defaultValue": "Standard_DS1_v2",
+              "allowedValues": [
+                "Standard_DS1_v2",
+                "Standard_D2s_v5"
+              ],
               "metadata": {
                 "description": "Size of the virtual machine."
               }

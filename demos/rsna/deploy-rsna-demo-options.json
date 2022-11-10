@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "11995179437038501821"
+      "templateHash": "16109294215035667129"
     }
   },
   "parameters": {
@@ -13,7 +13,7 @@
       "type": "secureString",
       "minLength": 12,
       "metadata": {
-        "description": "Password for the Virtual Machine."
+        "description": "Administrator Password for Jump VM and SQL."
       }
     },
     "location": {
@@ -21,6 +21,59 @@
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "Location for all resources."
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "ContosoVnet",
+      "metadata": {
+        "description": "Subnet Name"
+      }
+    },
+    "adminLogin": {
+      "type": "string",
+      "defaultValue": "student",
+      "metadata": {
+        "description": "Login name for Jump VM and SQL."
+      }
+    },
+    "image": {
+      "type": "string",
+      "defaultValue": "qvera/qie:latest",
+      "metadata": {
+        "description": "Qvera QIE ontainer image to deploy."
+      }
+    },
+    "port": {
+      "type": "int",
+      "defaultValue": 80,
+      "metadata": {
+        "description": "Port to open on the container."
+      }
+    },
+    "qveraCpuCores": {
+      "type": "int",
+      "defaultValue": 4,
+      "metadata": {
+        "description": "The number of CPU cores to allocate to the container. Must be an integer."
+      }
+    },
+    "qveraMemoryInGb": {
+      "type": "int",
+      "defaultValue": 16,
+      "metadata": {
+        "description": "The amount of memory to allocate to the container in gigabytes."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_DS1_v2",
+      "allowedValues": [
+        "Standard_DS1_v2",
+        "Standard_D2s_v5"
+      ],
+      "metadata": {
+        "description": "Size of the virtual machine."
       }
     }
   },
@@ -42,10 +95,13 @@
             "value": "[parameters('adminPassword')]"
           },
           "vnetName": {
-            "value": "ContosoVnet"
+            "value": "[parameters('vnetName')]"
           },
           "adminUsername": {
-            "value": "student"
+            "value": "[parameters('adminLogin')]"
+          },
+          "vmSize": {
+            "value": "[parameters('vmSize')]"
           }
         },
         "template": {
@@ -424,22 +480,28 @@
             "value": "[parameters('adminPassword')]"
           },
           "adminLogin": {
-            "value": "student"
+            "value": "[parameters('adminLogin')]"
           },
           "containerName": {
             "value": "qie-container"
           },
           "cpuCores": {
-            "value": 4
+            "value": "[parameters('qveraCpuCores')]"
           },
           "memoryInGb": {
-            "value": 8
+            "value": "[parameters('qveraMemoryInGb')]"
           },
           "subnetName": {
             "value": "qveraSubnet"
           },
           "subnetPrefix": {
             "value": "10.0.1.0/24"
+          },
+          "image": {
+            "value": "[parameters('image')]"
+          },
+          "port": {
+            "value": "[parameters('port')]"
           }
         },
         "template": {

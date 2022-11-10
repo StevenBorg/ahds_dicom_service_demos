@@ -9,9 +9,6 @@ param adminPassword string
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
-@description('Subnet 1 Name')
-param vnetName string = 'ContosoVnet'
-
 
 // Deploy the jumpbox and vnet
 module jumpbox_deployment './deploy-vnet-with-jump-vm.bicep' = {
@@ -19,7 +16,7 @@ module jumpbox_deployment './deploy-vnet-with-jump-vm.bicep' = {
   params: {
     location: location
     adminPassword: adminPassword
-    vnetName: vnetName
+    vnetName: 'ContosoVnet'
     adminUsername: 'student'
   }
 }

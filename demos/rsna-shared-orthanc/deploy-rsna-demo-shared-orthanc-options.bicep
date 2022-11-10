@@ -1,7 +1,6 @@
 // This script deploys the on-prem solution 
-
-
-@description('Password for the Virtual Machine.')
+// This script deploys the on-prem solution 
+@description('Administrator Password for Jump VM and SQL.')
 @minLength(12)
 @secure()
 param adminPassword string
@@ -9,14 +8,41 @@ param adminPassword string
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
+@description('Subnet Name')
+param vnetName string = 'ContosoVnet'
+
+@description('Login name for Jump VM and SQL.')
+param adminLogin string = 'student'
+
+@description('Qvera QIE ontainer image to deploy.')
+param image string = 'qvera/qie:latest'
+
+@description('Port to open on the container.')
+param port int = 80
+
+@description('The number of CPU cores to allocate to the container. Must be an integer.')
+param qveraCpuCores int = 4
+
+@description('The amount of memory to allocate to the container in gigabytes.')
+param qveraMemoryInGb int = 16
+
+@description('Size of the virtual machine.')
+@allowed([
+  'Standard_DS1_v2'
+  'Standard_D2s_v5'
+])
+param vmSize string = 'Standard_DS1_v2' //'Standard_D2s_v5'
+
+
 // Deploy the jumpbox and vnet
 module jumpbox_deployment '../rsna/deploy-vnet-with-jump-vm.bicep' = {
   name: 'jumpbox_deployment'
   params: {
     location: location
     adminPassword: adminPassword
-    vnetName: 'ContosoVnet'
-    adminUsername: 'student'
+    vnetName: vnetName
+    adminUsername: adminLogin
+    vmSize: vmSize
   }
 }
 
@@ -35,12 +61,14 @@ module qvera_subnet '../rsna/deploy-qvera-subnet.bicep' = {
     location: location
     vnetName: jumpbox_deployment.outputs.vnetName
     adminPassword: adminPassword
-    adminLogin: 'student'
+    adminLogin: adminLogin
     containerName: 'qie-container'
-    cpuCores: 4
-    memoryInGb: 8
+    cpuCores: qveraCpuCores
+    memoryInGb: qveraMemoryInGb
     subnetName: 'qveraSubnet'
     subnetPrefix: '10.0.1.0/24'
+    image: image
+    port: port
   }
 }
 

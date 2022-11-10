@@ -9,7 +9,7 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 ## Steps
 - Create the Azure environment. This can be done in one of two ways. You can use the Bicep command line, which is easiest if you are running this repo multiple times for development. Or you can use the Azure Portal user experience, which is easiest for a one-off deployment. Both create identical environments.
   - Azure Portal
-    - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo.json)
+    - To use reasonable default values, simply click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo.json)
     - Fill in required information
       - Select an Azure subscription
       - Create a new Resource Group
@@ -18,6 +18,8 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
       - Click *Review + create*
       - Click *Create*
       - ![Steps to deploy using the Portal](../../readme-images/steps-deploy-infra-using-portal.png "Steps to deploy using the Portal").
+    - To select your own values, click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna-shared-orthanc%2Fdeploy-rsna-demo-options.json)
+      - Fill out values appropriately, and follow steps above.
   - ACI command line with Bicep
     - Clone this repo
     - Open a command line that has Azure CLI support and navigate to this folder (`./ahds_dicom_service_demos/demos/rsna)
