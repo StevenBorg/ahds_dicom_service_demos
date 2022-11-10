@@ -9,7 +9,7 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 ## Steps
 - Create the Azure environment. This can be done in one of two ways. You can use the Bicep command line, which is easiest if you are running this repo multiple times for development. Or you can use the Azure Portal user experience, which is easiest for a one-off deployment. Both create identical environments.
   - Azure Portal
-    - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo.json)
+    - Click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna-shared-orthanc%2Fdeploy-rsna-demo.json)
     - Fill in required information
       - Select an Azure subscription
       - Create a new Resource Group
@@ -58,4 +58,4 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
   - When prompted to enter your License, refer to the email you received when you signed up for an account. Enter both the License ID and the Activation Code, and click *Get License*
 - Connect to Orthanc
   - Using Edge, navigate to `http://10.0.2.4:8042` 
-  - Enter `orthanc` as username and `orthanc` as password.
+  - Enter `student` as username and `student` as password.

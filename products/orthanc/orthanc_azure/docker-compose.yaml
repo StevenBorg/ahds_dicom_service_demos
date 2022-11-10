@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+    orthanc:
+        image: osimis/orthanc:22.6.1-full
+        ports: [8042:8042,5432:5432]
+        environment:
+            - ORTHANC__AZURE_BLOB_STORAGE__CONTAINER_NAME=orthancblob
+            - ORTHANC__AUTHENTICATION_ENABLED=true
+            - ORTHANC__DICOM_SERVER_ENABLED=true
+            - ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net
+            - ORTHANC__POSTGRESQL__ENABLE_INDEX=true
+            - ORTHANC__POSTGRESQL__ENABLE_STORAGE=false
+            - ORTHANC__POSTGRESQL__HOST=orthancpostgres.postgres.database.azure.com
+            - ORTHANC__POSTGRESQL__PORT=5432
+            - ORTHANC__POSTGRESQL__DATABASE=orthanc
+            - ORTHANC__POSTGRESQL__USERNAME=student
+            - ORTHANC__POSTGRESQL__PASSWORD=R@diologyR0cks!
+            - ORTHANC__POSTGRESQL__ENABLE_SSL=true
+            - ORTHANC__POSTGRESQL__LOCK=false
+            - ORTHANC__NAME="orthanc"
+            - ORTHANC__REGISTERED_USERS={"student":"student"}
+            - WVB_ENABLED=true
+ 

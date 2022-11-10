@@ -1,0 +1,19 @@
+{
+  "AzureBlobStorage" : {
+  "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net",
+  "ContainerName" : "orthancblob",
+  "CreateContainerIfNotExists": true,       // available from version 1.2.0
+  "RootPath": "",                           // see below
+  "MigrationFromFileSystemEnabled": false,  // see below
+  "StorageStructure": "flat",               // see below
+  "EnableLegacyUnknownFiles": true,         // optional: see below
+  "StorageEncryption" : {},                  // optional: see the section related to encryption
+  "HybridMode": "Disabled" 
+  },     
+  "Odbc" : {
+    "EnableIndex" : true,
+    "EnableStorage" : false,
+    "IndexConnectionString" : "Driver={ODBC Driver 17 for SQL Server};Server=tcp:localhost,1433;Database=orthanctest;Uid=sa;Pwd=MyStrOngPa55word!",
+    "StorageConnectionString" : "Driver={ODBC Driver 17 for SQL Server};Server=tcp:localhost,1433;Database=orthanctest;Uid=sa;Pwd=MyStrOngPa55word!"
+  }
+}

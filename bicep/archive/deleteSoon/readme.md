@@ -30,6 +30,10 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
     - Wait until you have a successful deployment
 - Open https://portal.azure.com and navigate to the Overview section of resource group you just created.
 - In the list of created resources, click on the *jump-vm* virtual machine.
+- Configure Remote Desktop
+  - In the VM settings blade (to the left), click *Run command* (in the Operations section)
+  - Select the SetRDPPort command, enter 4545 in the RDPPORT section, and click *Run*
+  - ![Steps to configure RDPPort](../../readme-images/steps-set-rdp-port.png "Steps to configure RDPPort").
 - Download the Remote Desktop RDP file
   - In the VM settings blad (to the left), click *Connect* (in the Settings section)
   - Change the Port Number from 3389 to 4545, and click *Download RDP File*
