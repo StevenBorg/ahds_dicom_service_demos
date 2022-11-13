@@ -1,6 +1,6 @@
 
 $scriptList = @(
-    'change-rdp.port.ps1'
+    'change-rdp-port.ps1'
     'download-files.ps1'
 );
 
