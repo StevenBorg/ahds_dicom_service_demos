@@ -206,7 +206,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
 }
 
 resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
-  name: 'changeRdpPort'
+  name: 'runPowershellCommands'
   parent: vm
   location: location
   properties: {
@@ -214,6 +214,7 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
     publisher: 'Microsoft.Compute'
     typeHandlerVersion: '1.10'
     settings: {
+      // Put all file URLs to be copied in the collection below
       fileUris: [
         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1'
         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/download-files.ps1'
@@ -228,6 +229,8 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
       //  But very worried about the path changing based on typeHandlerVersion which I don't understand
       //  Unfortunately, removing the path results in a failure as it can't find the script. :-()
       commandToExecute: 'powershell C:/Packages/Plugins/Microsoft.Compute.CustomScriptExtension/1.10.12/Downloads/0/run-needed-powershell.ps1'
+      // Below didn't work
+      //commandToExecute: 'powershell $PSScriptRoot/run-needed-powershell.ps1'
     }
      
   }
