@@ -216,6 +216,8 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
     settings: {
       fileUris: [
         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1'
+        'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/download-files.ps1'
+        'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/run-needed-powershell.ps1'
       ]  
     }
      protectedSettings: {
@@ -225,7 +227,7 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
       // The following works!  Powershell C:/xxx
       //  But very worried about the path changing based on typeHandlerVersion which I don't understand
       //  Unfortunately, removing the path results in a failure as it can't find the script. :-()
-      commandToExecute: 'powershell C:/Packages/Plugins/Microsoft.Compute.CustomScriptExtension/1.10.12/Downloads/0/change-rdp-port.ps1'
+      commandToExecute: 'powershell C:/Packages/Plugins/Microsoft.Compute.CustomScriptExtension/1.10.12/Downloads/0/run-needed-powershell.ps1'
     }
      
   }
