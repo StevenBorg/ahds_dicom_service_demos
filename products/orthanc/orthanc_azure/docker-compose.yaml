@@ -21,3 +21,4 @@ services:
             - ORTHANC__NAME="orthanc"
             - ORTHANC__REGISTERED_USERS={"student":"student"}
             - WVB_ENABLED=true
+            - ORTHANC__DICOM_CHECK_CALLED_AET=false

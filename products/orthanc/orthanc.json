@@ -1,14 +1,12 @@
 {
-
-  "Name" : "QieOrthanc",
-  
+ 
   "DicomAet" : "ORTHANCQIE",
   "DicomCheckCalledAet" : false,
   "DicomPort" : 4242,
   "DefaultEncoding" : "Latin1",
 
-   "DicomModalities" : {
-	"QVERASCU" : [ "QVERASCU", "10.0.1.4", 20030 ]
+  "DicomModalities" : {
+	  "QVERASCU" : [ "QVERASCU", "10.0.1.4", 20030 ]
   }
 }
 
