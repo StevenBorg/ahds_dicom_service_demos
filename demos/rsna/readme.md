@@ -9,8 +9,8 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 ## Steps
 - Create the Azure environment. This can be done in one of two ways. You can use the Bicep command line, which is easiest if you are running this repo multiple times for development. Or you can use the Azure Portal user experience, which is easiest for a one-off deployment. Both create identical environments.
   - Azure Portal
-    - To use reasonable default values, simply click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo.json)
-      - (To customize deployment, click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna-shared-orthanc%2Fdeploy-rsna-demo-options.json) instead.)
+    - To use reasonable default values, simply click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna%2Fdeploy-rsna-demo-on-prem.json)
+      - (To customize deployment, click [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FStevenBorg%2Fahds_dicom_service_demos%2Fmain%2Fdemos%2Frsna-shared-orthanc%2Fdeploy-rsna-demo-on-prem-options.json) instead.)
     - Fill in required information
       - Select an Azure subscription
       - Create a new Resource Group
@@ -26,7 +26,7 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
       - `az login`
       - `az account set -s "<desired Azure Subscription Name>"  `
       - `az group create --location eastus --name yourUniqueResourceGroupName `
-      - `az deployment group create --template-file .\deploy-rsna-demo.bicep --resource-group yourUniqueResourceGroupName`
+      - `az deployment group create --template-file .\deploy-rsna-demo-on-prem.bicep --resource-group yourUniqueResourceGroupName`
     - Enter a complex password that will be used later to log into the Jump-VM virtual machine that will be created
     - Wait until you have a successful deployment
 - Open https://portal.azure.com and navigate to the Overview section of resource group you just created.

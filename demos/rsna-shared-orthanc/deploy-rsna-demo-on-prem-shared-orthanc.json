@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "361412007914628562"
+      "templateHash": "18388481437021317353"
     }
   },
   "parameters": {
@@ -13,7 +13,7 @@
       "type": "secureString",
       "minLength": 12,
       "metadata": {
-        "description": "Administrator Password for Jump VM and SQL."
+        "description": "Password for the Virtual Machine."
       }
     },
     "location": {
@@ -21,59 +21,6 @@
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "Location for all resources."
-      }
-    },
-    "vnetName": {
-      "type": "string",
-      "defaultValue": "ContosoVnet",
-      "metadata": {
-        "description": "Subnet Name"
-      }
-    },
-    "adminLogin": {
-      "type": "string",
-      "defaultValue": "student",
-      "metadata": {
-        "description": "Login name for Jump VM and SQL."
-      }
-    },
-    "image": {
-      "type": "string",
-      "defaultValue": "qvera/qie:latest",
-      "metadata": {
-        "description": "Qvera QIE ontainer image to deploy."
-      }
-    },
-    "port": {
-      "type": "int",
-      "defaultValue": 80,
-      "metadata": {
-        "description": "Port to open on the container."
-      }
-    },
-    "qveraCpuCores": {
-      "type": "int",
-      "defaultValue": 4,
-      "metadata": {
-        "description": "The number of CPU cores to allocate to the container. Must be an integer."
-      }
-    },
-    "qveraMemoryInGb": {
-      "type": "int",
-      "defaultValue": 16,
-      "metadata": {
-        "description": "The amount of memory to allocate to the container in gigabytes."
-      }
-    },
-    "vmSize": {
-      "type": "string",
-      "defaultValue": "Standard_DS1_v2",
-      "allowedValues": [
-        "Standard_DS1_v2",
-        "Standard_D2s_v5"
-      ],
-      "metadata": {
-        "description": "Size of the virtual machine."
       }
     }
   },
@@ -95,13 +42,10 @@
             "value": "[parameters('adminPassword')]"
           },
           "vnetName": {
-            "value": "[parameters('vnetName')]"
+            "value": "ContosoVnet"
           },
           "adminUsername": {
-            "value": "[parameters('adminLogin')]"
-          },
-          "vmSize": {
-            "value": "[parameters('vmSize')]"
+            "value": "student"
           }
         },
         "template": {
@@ -111,7 +55,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "17950818720740043376"
+              "templateHash": "766685691948795609"
             }
           },
           "parameters": {
@@ -165,21 +109,21 @@
                 "description": "SKU for the Public IP used to access the Virtual Machine."
               }
             },
-            "OSsku": {
+            "OsSku": {
               "type": "string",
               "defaultValue": "win10-21h2-pro-g2",
               "metadata": {
                 "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
               }
             },
-            "OSoffer": {
+            "OsOffer": {
               "type": "string",
               "defaultValue": "Windows-10",
               "metadata": {
                 "description": "The Windows version for the VM. This will pick a fully patched image of this given Windows version."
               }
             },
-            "OSpublisher": {
+            "OsPublisher": {
               "type": "string",
               "defaultValue": "MicrosoftWindowsDesktop",
               "metadata": {
@@ -366,9 +310,9 @@
                 },
                 "storageProfile": {
                   "imageReference": {
-                    "publisher": "[parameters('OSpublisher')]",
-                    "offer": "[parameters('OSoffer')]",
-                    "sku": "[parameters('OSsku')]",
+                    "publisher": "[parameters('OsPublisher')]",
+                    "offer": "[parameters('OsOffer')]",
+                    "sku": "[parameters('OsSku')]",
                     "version": "latest"
                   },
                   "osDisk": {
@@ -407,7 +351,7 @@
             {
               "type": "Microsoft.Compute/virtualMachines/extensions",
               "apiVersion": "2022-08-01",
-              "name": "[format('{0}/{1}', parameters('vmName'), 'changeRdpPort')]",
+              "name": "[format('{0}/{1}', parameters('vmName'), 'runPowershellCommands')]",
               "location": "[parameters('location')]",
               "properties": {
                 "type": "CustomScriptExtension",
@@ -415,11 +359,13 @@
                 "typeHandlerVersion": "1.10",
                 "settings": {
                   "fileUris": [
-                    "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1"
+                    "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1",
+                    "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/download-files.ps1",
+                    "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/run-needed-powershell.ps1"
                   ]
                 },
                 "protectedSettings": {
-                  "commandToExecute": "powershell C:/Packages/Plugins/Microsoft.Compute.CustomScriptExtension/1.10.12/Downloads/0/change-rdp-port.ps1"
+                  "commandToExecute": "powershell C:/Packages/Plugins/Microsoft.Compute.CustomScriptExtension/1.10.12/Downloads/0/run-needed-powershell.ps1"
                 }
               },
               "dependsOn": [
@@ -480,28 +426,22 @@
             "value": "[parameters('adminPassword')]"
           },
           "adminLogin": {
-            "value": "[parameters('adminLogin')]"
+            "value": "student"
           },
           "containerName": {
             "value": "qie-container"
           },
           "cpuCores": {
-            "value": "[parameters('qveraCpuCores')]"
+            "value": 4
           },
           "memoryInGb": {
-            "value": "[parameters('qveraMemoryInGb')]"
+            "value": 8
           },
           "subnetName": {
             "value": "qveraSubnet"
           },
           "subnetPrefix": {
             "value": "10.0.1.0/24"
-          },
-          "image": {
-            "value": "[parameters('image')]"
-          },
-          "port": {
-            "value": "[parameters('port')]"
           }
         },
         "template": {
@@ -921,7 +861,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "7199181935883196356"
+              "templateHash": "3370719423527678776"
             }
           },
           "parameters": {
@@ -1089,7 +1029,7 @@
                         },
                         {
                           "name": "ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING",
-                          "value": "DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net"
+                          "value": "<Add here>"
                         },
                         {
                           "name": "ORTHANC__POSTGRESQL__ENABLE_INDEX",
@@ -1117,7 +1057,7 @@
                         },
                         {
                           "name": "ORTHANC__POSTGRESQL__PASSWORD",
-                          "value": "R@diologyR0cks!"
+                          "value": "<Add here>"
                         },
                         {
                           "name": "ORTHANC__POSTGRESQL__ENABLE_SSL",
