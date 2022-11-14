@@ -15,3 +15,10 @@ secrets:
     file: blob-connection-string.txt
   ORTHANC__MSSQL__CONNECTION_STRING:
     file: mssql-connection-string.txt
+
+
+        secrets:
+            - ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING
+secrets:
+  ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING:
+    file: blob-connection-string.txt

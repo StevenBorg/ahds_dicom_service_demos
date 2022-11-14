@@ -8,7 +8,7 @@ services:
             - ORTHANC__AZURE_BLOB_STORAGE__CONTAINER_NAME=orthancblob
             - ORTHANC__AUTHENTICATION_ENABLED=true
             - ORTHANC__DICOM_SERVER_ENABLED=true
-            - ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING=
+            - ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net
             - ORTHANC__POSTGRESQL__ENABLE_INDEX=true
             - ORTHANC__POSTGRESQL__ENABLE_STORAGE=false
             - ORTHANC__POSTGRESQL__HOST=orthancpostgres.postgres.database.azure.com
@@ -21,3 +21,8 @@ services:
             - ORTHANC__NAME="orthanc"
             - ORTHANC__REGISTERED_USERS={"student":"student"}
             - WVB_ENABLED=true
+        secrets:
+            - orthanc.json
+ secrets:
+  orthanc.json:
+    file: orthanc.json

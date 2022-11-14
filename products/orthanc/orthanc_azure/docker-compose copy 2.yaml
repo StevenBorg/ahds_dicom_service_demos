@@ -8,7 +8,7 @@ services:
             - ORTHANC__AZURE_BLOB_STORAGE__CONTAINER_NAME=orthancblob
             - ORTHANC__AUTHENTICATION_ENABLED=false
             - ORTHANC__DICOM_SERVER_ENABLED=false
-            - ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net
+            - ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING=
             - ORTHANC__MSSQL__CONNECTION_STRING=Driver={ODBC Driver 17 for SQL Server};Server=tcp:orthancsqlserver.database.windows.net,1433;Initial Catalog=OrthancDb;Persist Security Info=False;User ID=student;Password=R@diologyR0cks!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
             - ORTHANC__ODBC__ENABLE_INDEX=true
             - ORTHANC__ODBC__INDEX_CONNECTION_STRING=Driver={ODBC Driver 17 for SQL Server};Server=tcp:orthancsqlserver.database.windows.net,1433;Initial Catalog=OrthancDb;Persist Security Info=False;User ID=student;Password=R@diologyR0cks!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;

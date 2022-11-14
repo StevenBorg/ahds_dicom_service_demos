@@ -1,0 +1,75 @@
+{
+
+  "Name" : "QieOrthanc",
+  "StorageDirectory" : "/Orthanc",
+  "IndexDirectory" : "/Orthanc",
+  "TemporaryDirectory" : "/tmp/Orthanc/",
+
+  "MaximumStorageCacheSize" : 128,
+
+
+
+  "HttpServerEnabled" : true,
+  "OrthancExplorerEnabled" : true,
+  "HttpPort" : 8042,
+
+   "DicomServerEnabled" : true,
+
+
+  "DicomAet" : "ORTHANCQIE",
+  "DicomCheckCalledAet" : false,
+  "DicomPort" : 4242,
+  "DefaultEncoding" : "Latin1",
+
+  // The transfer syntaxes that are accepted by Orthanc C-STORE SCP.
+  // This is an array listing the accepted transfer syntax UIDs. Each
+  // entry can contain wildcards ("?" or "*"). By default, all the
+  // known transfer syntaxes are accepted. (new in Orthanc 1.9.0)
+  "AcceptedTransferSyntaxes" : [ "1.2.840.10008.1.*" ],
+
+  // User-friendly groups of transfer syntaxes that can be enabled or
+  // disabled at once. These options are applied after the main
+  // "AcceptedTransferSyntaxes" option has been applied (if present).
+  /**
+     "DeflatedTransferSyntaxAccepted"     : true,
+     "JpegTransferSyntaxAccepted"         : true,
+     "Jpeg2000TransferSyntaxAccepted"     : true,
+     "JpegLosslessTransferSyntaxAccepted" : true,
+     "JpipTransferSyntaxAccepted"         : true,
+     "Mpeg2TransferSyntaxAccepted"        : true,
+     "RleTransferSyntaxAccepted"          : true,
+     "Mpeg4TransferSyntaxAccepted"        : true,  // New in Orthanc 1.6.0
+     "H265TransferSyntaxAccepted"         : true,  // New in Orthanc 1.9.0
+  **/
+  
+  // Whether Orthanc accepts to act as C-STORE SCP for unknown storage
+  // SOP classes (aka. "promiscuous mode")
+  "UnknownSopClassAccepted" : false,
+
+  // Set the timeout (in seconds) after which the DICOM associations
+  // are closed by the Orthanc SCP (server) if no further DIMSE
+  // command is received from the SCU (client).
+  "DicomScpTimeout" : 30,
+
+
+
+  /**
+   * Security-related options for the HTTP server
+   **/
+
+  // Whether remote hosts can connect to the HTTP server
+  "RemoteAccessAllowed" : true,
+   
+  "AuthenticationEnabled" : true,
+  "RegisteredUsers" : {
+    // "alice" : "alicePassword"
+	"admin" : "admin"
+  },
+
+  "DicomTlsEnabled" : false,
+  "DicomTlsRemoteCertificateRequired" : true,
+  "DicomModalities" : {
+	"QVERASCU" : [ "QVERASCU", "10.0.1.4", 20030 ]
+  }
+}
+

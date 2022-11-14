@@ -1,1 +1,1 @@
-DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net
+ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=2tFy5uMTp/IRSVHZMnpZwiVZhMSsnh66OpuW3qPAvLq9/t8X4UdBUY8r19fW4Y2Ty9A0yEuDcnu++ASt2yHoRw==;EndpointSuffix=core.windows.net

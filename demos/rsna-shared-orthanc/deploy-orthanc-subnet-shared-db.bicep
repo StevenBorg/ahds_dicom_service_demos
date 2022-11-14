@@ -149,7 +149,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING'
-              value: 'DefaultEndpointsProtocol=https;AccountName=sjborthancstorage;AccountKey=wHQN6DrMRHve446y7MeFkDWXkNBjAg1/lHhV7ytVMxjh/UJO5GfLInnprw1eeRhOfdFl2GHUCbA1+ASte65E/Q==;EndpointSuffix=core.windows.net' 
+              value: '<Add here>' 
             }
             {
               name: 'ORTHANC__POSTGRESQL__ENABLE_INDEX'
@@ -177,7 +177,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__POSTGRESQL__PASSWORD'
-              value: 'R@diologyR0cks!'
+              value: '<Add here>'
             }
             {
               name: 'ORTHANC__POSTGRESQL__ENABLE_SSL'

@@ -27,13 +27,13 @@ param publicIPAllocationMethod string = 'Dynamic'
 param publicIpSku string = 'Basic'
 
 @description('The Windows version for the VM. This will pick a fully patched image of this given Windows version.')
-param OSsku string = 'win10-21h2-pro-g2' 
+param OsSku string = 'win10-21h2-pro-g2' 
 
 @description('The Windows version for the VM. This will pick a fully patched image of this given Windows version.')
-param OSoffer string = 'Windows-10' 
+param OsOffer string = 'Windows-10' 
 
 @description('The Windows version for the VM. This will pick a fully patched image of this given Windows version.')
-param OSpublisher string = 'MicrosoftWindowsDesktop' 
+param OsPublisher string = 'MicrosoftWindowsDesktop' 
 
 @description('Size of the virtual machine.')
 @allowed([
@@ -170,9 +170,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        publisher: OSpublisher
-        offer: OSoffer
-        sku: OSsku
+        publisher: OsPublisher
+        offer: OsOffer
+        sku: OsSku
         version: 'latest'
       }
       osDisk: {
