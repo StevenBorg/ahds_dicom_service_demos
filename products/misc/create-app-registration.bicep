@@ -8,6 +8,7 @@
 
 // az rest --method POST --uri 'https://graph.microsoft.com/beta/roleManagement/directory/roleAssignments' --body '{"principalId": "<Id of the managed identity>", "roleDefinitionId": "9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3"}'
 
+// az rest --method POST --uri 'https://graph.microsoft.com/beta/roleManagement/directory/roleAssignments' --body '{"principalId": "f1c508cf-883c-4104-8f93-fd68e599c86e", "roleDefinitionId": "9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3"}'
 
 
 param name string

@@ -49,3 +49,11 @@ docker run --restart=always -itd -p 80:8080 -e integration=study stevenborg/medd
 docker build -t stevenborg/meddream .
 // remote -d to see the output in the command window.  With -d you need to go look at docker.
 docker run -d -p 80:8080 stevenborg/meddream
+
+------------
+When adding role assignments, and get an error: Principals of type Application cannot validly be used in role as...
+	that means you're using the Application's Object ID. You need to find the Application's associated Principal Object ID...  
+see: https://github.com/Azure/terraform-azurerm-appgw-ingress-k8s-cluster/issues/1
+and: https://github.com/Azure/azure-cli/issues/5340
+
+az ad sp list --filter "displayName eq 'rsna-demo-viewer-app1'" // This works maybe?

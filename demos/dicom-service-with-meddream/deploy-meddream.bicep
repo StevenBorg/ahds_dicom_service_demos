@@ -31,7 +31,6 @@ param cpuCores int = 4
 @description('The amount of memory to allocate to the container in gigabytes.')
 param memoryInGb int = 16
 
-
 resource meddreamContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: 'meddreamContainerGroup'
   location: location
@@ -92,3 +91,7 @@ resource meddreamContainerGroup 'Microsoft.ContainerInstance/containerGroups@201
     restartPolicy: 'Always'
   }
 }
+
+output meddreamIp string = meddreamContainerGroup.properties.ipAddress.ip
+//output meddreamFqdn string = meddreamContainerGroup.properties.ipAddress.fqdn
+output meddreamPort array = meddreamContainerGroup.properties.ipAddress.ports

@@ -1,0 +1,14 @@
+
+
+{
+"type": "Microsoft.Authorization/roleAssignments",
+"name": "[concat(parameters('dicomservicename'),'/Microsoft.Authorization/',guid(uniqueString(parameters('dicomservicename'))))]",
+"apiVersion": "2021-04-01-preview",
+"location": "[resourceGroup().location]",
+"scope": "[concat('Microsoft.HealthcareApis/workspaces/dicomservices', '/', parameters('dicomservicename'))]",
+"properties": {
+  "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '58a3b984-7adf-4c20-983a-32417c86fbc8')]",
+  "principalId": "[parameters('principalId')]",
+  "principalType": "ServicePrincipal"
+}
+}
