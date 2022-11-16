@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "8838105857266402997"
+      "templateHash": "18412869619169131313"
     }
   },
   "parameters": {
@@ -75,6 +75,18 @@
       "metadata": {
         "description": "Size of the virtual machine."
       }
+    },
+    "ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING": {
+      "type": "secureString",
+      "metadata": {
+        "description": "Azure Blob Connection string for shared Orthanc"
+      }
+    },
+    "ORTHANC__POSTGRESQL__PASSWORD": {
+      "type": "secureString",
+      "metadata": {
+        "description": "PostgresSQL Password for shared Orthanc"
+      }
     }
   },
   "resources": [
@@ -111,7 +123,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "766685691948795609"
+              "templateHash": "5578331073835701687"
             }
           },
           "parameters": {
@@ -417,7 +429,8 @@
                   "fileUris": [
                     "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1",
                     "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/download-files.ps1",
-                    "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/run-needed-powershell.ps1"
+                    "https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/run-needed-powershell.ps1",
+                    "https://dicom.offis.de/download/dcmtk/dcmtk367/bin/dcmtk-3.6.7-win64-dynamic.zip"
                   ]
                 },
                 "protectedSettings": {
@@ -914,6 +927,12 @@
           },
           "subnetPrefix": {
             "value": "10.0.2.0/24"
+          },
+          "ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING": {
+            "value": "[parameters('ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING')]"
+          },
+          "ORTHANC__POSTGRESQL__PASSWORD": {
+            "value": "[parameters('ORTHANC__POSTGRESQL__PASSWORD')]"
           }
         },
         "template": {
@@ -923,7 +942,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "3370719423527678776"
+              "templateHash": "3603715752462584879"
             }
           },
           "parameters": {
@@ -994,6 +1013,18 @@
               "defaultValue": "orthancSubnet",
               "metadata": {
                 "description": "Subnet Name"
+              }
+            },
+            "ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING": {
+              "type": "secureString",
+              "metadata": {
+                "description": "Azure Blob Connection string for shared Orthanc"
+              }
+            },
+            "ORTHANC__POSTGRESQL__PASSWORD": {
+              "type": "secureString",
+              "metadata": {
+                "description": "PostgresSQL Password for shared Orthanc"
               }
             }
           },
@@ -1091,7 +1122,7 @@
                         },
                         {
                           "name": "ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING",
-                          "value": "<Add here>"
+                          "secureValue": "[parameters('ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING')]"
                         },
                         {
                           "name": "ORTHANC__POSTGRESQL__ENABLE_INDEX",
@@ -1119,7 +1150,7 @@
                         },
                         {
                           "name": "ORTHANC__POSTGRESQL__PASSWORD",
-                          "value": "<Add here>"
+                          "secureValue": "[parameters('ORTHANC__POSTGRESQL__PASSWORD')]"
                         },
                         {
                           "name": "ORTHANC__POSTGRESQL__ENABLE_SSL",

@@ -33,6 +33,14 @@ param qveraMemoryInGb int = 16
 ])
 param vmSize string = 'Standard_DS1_v2' //'Standard_D2s_v5'
 
+@description('Azure Blob Connection string for shared Orthanc')
+@secure()
+param ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING string 
+
+@description('PostgresSQL Password for shared Orthanc')
+@secure()
+param ORTHANC__POSTGRESQL__PASSWORD string 
+
 
 // Deploy the jumpbox and vnet
 module jumpbox_deployment '../rsna/deploy-vnet-with-jump-vm.bicep' = {
@@ -87,6 +95,7 @@ module orthanc_subnet './deploy-orthanc-subnet-shared-db.bicep' = {
     memoryInGb: 4
     subnetName: 'orthancSubnet'
     subnetPrefix: '10.0.2.0/24'
-
+    ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING: ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING
+    ORTHANC__POSTGRESQL__PASSWORD: ORTHANC__POSTGRESQL__PASSWORD
   }
 }

@@ -28,6 +28,17 @@ param subnetPrefix string = '10.0.2.0/24'
 @description('Subnet Name')
 param subnetName string = 'orthancSubnet'
 
+@description('Azure Blob Connection string for shared Orthanc')
+@secure()
+param ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING string 
+
+@description('PostgresSQL Password for shared Orthanc')
+@secure()
+param ORTHANC__POSTGRESQL__PASSWORD string 
+
+
+
+
 // This defines a resource for an EXISTING vnet! (must already exist)
 resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
   name: vnetName
@@ -149,7 +160,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING'
-              value: '<Add here>' 
+              secureValue: ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING
             }
             {
               name: 'ORTHANC__POSTGRESQL__ENABLE_INDEX'
@@ -177,7 +188,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__POSTGRESQL__PASSWORD'
-              value: '<Add here>'
+              secureValue: ORTHANC__POSTGRESQL__PASSWORD
             }
             {
               name: 'ORTHANC__POSTGRESQL__ENABLE_SSL'
