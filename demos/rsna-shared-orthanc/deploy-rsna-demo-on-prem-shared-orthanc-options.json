@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.12.40.16777",
-      "templateHash": "18412869619169131313"
+      "templateHash": "16532474319396971737"
     }
   },
   "parameters": {
@@ -942,7 +942,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.12.40.16777",
-              "templateHash": "3603715752462584879"
+              "templateHash": "124979228745911785"
             }
           },
           "parameters": {
@@ -1159,6 +1159,26 @@
                         {
                           "name": "ORTHANC__POSTGRESQL__LOCK",
                           "value": "false"
+                        },
+                        {
+                          "name": "ORTHANC__DICOM_AET",
+                          "value": "\"ORTHANCQIE\""
+                        },
+                        {
+                          "name": "ORTHANC__DICOM_CHECK_CALLED_AET",
+                          "value": "false"
+                        },
+                        {
+                          "name": "ORTHANC__DICOM_PORT",
+                          "value": 4242
+                        },
+                        {
+                          "name": "ORTHANC__DEFAULT_ENCODING",
+                          "value": "Latin1"
+                        },
+                        {
+                          "name": "ORTHANC__DICOM_MODALITIES",
+                          "value": "{ \"QIETOAZURE\" : [ \"QIETOAZURE\", \"10.0.1.4\", 4006 ] }"
                         }
                       ],
                       "resources": {

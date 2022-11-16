@@ -198,7 +198,26 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
               name: 'ORTHANC__POSTGRESQL__LOCK'
               value: 'false'
             }
-
+            {
+              name: 'ORTHANC__DICOM_AET'
+              value: '"ORTHANCQIE"'
+            }
+            {
+              name: 'ORTHANC__DICOM_CHECK_CALLED_AET'
+              value: 'false'
+            }
+            {
+              name: 'ORTHANC__DICOM_PORT'
+              value: 4242
+            }
+            {
+              name: 'ORTHANC__DEFAULT_ENCODING'
+              value: 'Latin1'
+            }
+            {
+              name: 'ORTHANC__DICOM_MODALITIES'
+              value: '{ "QIETOAZURE" : [ "QIETOAZURE", "10.0.1.4", 4006 ] }'
+            }
           ]
           resources: {
             requests: {
