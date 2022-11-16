@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Example: A link to User Manual",
+    "position": "VIEWER",
+    "openType": "ACTIVE_VIEWPORT_IFRAME",
+    "url": "../languages/en/help"
+  },
+  {
+    "name": "Google",
+    "position": "VIEWER",
+    "openType": "NEW_WINDOW",
+    "url": "https://www.google.com"
+  },
+  {
+    "name": "Radiopedia",
+    "position": "VIEWER",
+    "openType": "NEW_WINDOW",
+    "url": "https://radiopaedia.org/"
+  }
+
+]

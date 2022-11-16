@@ -39,3 +39,13 @@ $list_to_delete = az group list --query "$query"
 $list_to_delete
 
 az group delete --resource-group sjbDeleteMe67
+
+
+docker run --restart=always --name meddream -itd -p 80:8080 -v C:\githealth\ahds_dicom_service_demos\products\meddream\meddream.lic:/opt/meddream/license/meddream.lic -v C:\githealth\ahds_dicom_service_demos\products\meddream\system.json:/opt/meddream/sys/settings/system.json -v C:\githealth\ahds_dicom_service_demos\products\meddream\application.properties:/opt/meddream/application.properties -v C:\githealth\ahds_dicom_service_demos\products\meddream\global.json:/opt/meddream/sys/settings/global.json -v C:\githealth\ahds_dicom_service_demos\products\meddream\links.json:/opt/meddream/medcadPlugins/links.json -e integration=study meddream/dicom-viewer:8.1.0-rc.1
+docker run --restart=always -itd -p 80:8080 -e integration=study stevenborg/meddream
+
+
+
+docker build -t stevenborg/meddream .
+// remote -d to see the output in the command window.  With -d you need to go look at docker.
+docker run -d -p 80:8080 stevenborg/meddream

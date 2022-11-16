@@ -1,0 +1,9 @@
+FROM meddream/dicom-viewer:8.1.0-rc.1
+
+COPY meddream.lic /opt/meddream/license/meddream.lic 
+COPY system.json /opt/meddream/sys/settings/system.json
+COPY application.properties /opt/meddream/application.properties
+COPY global.json /opt/meddream/sys/settings/global.json
+COPY links.json /opt/meddream/medcadPlugins/links.json
+
+ENV integration=study
