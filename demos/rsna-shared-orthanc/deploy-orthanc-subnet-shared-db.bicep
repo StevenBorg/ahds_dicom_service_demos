@@ -208,7 +208,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__DICOM_PORT'
-              value: 4242
+              value: '4242'
             }
             {
               name: 'ORTHANC__DEFAULT_ENCODING'
