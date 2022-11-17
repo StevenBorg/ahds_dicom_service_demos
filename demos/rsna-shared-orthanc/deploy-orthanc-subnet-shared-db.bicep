@@ -37,8 +37,6 @@ param ORTHANC__AZURE_BLOB_STORAGE__CONNECTION_STRING string
 param ORTHANC__POSTGRESQL__PASSWORD string 
 
 
-
-
 // This defines a resource for an EXISTING vnet! (must already exist)
 resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
   name: vnetName
@@ -89,31 +87,6 @@ resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
     ]
   }
 }
-
-
-
-
-// //Create a subnet for qvera on existing vnet
-// module add_subnet './add-subnet-for-containters-to-existing-vnet.bicep' = {
-//   name: 'qvera_subnet'
-//   dependsOn: [
-//     vnet
-//   ]
-//   params: {
-//     location: location
-//     vnet_name: vnetName
-//     subnetName: subnetName
-//     subnetPrefix: subnetPrefix
-//     delegations: [
-//       {
-//         name: 'DelegationService'
-//         properties: {
-//           serviceName: 'Microsoft.ContainerInstance/containerGroups'
-//         }
-//       }      
-//     ]
-//   }
-// }
 
 resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: containerGroupName
@@ -200,7 +173,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__DICOM_AET'
-              value: '"ORTHANCQIE"'
+              value: 'ORTHANC'
             }
             {
               name: 'ORTHANC__DICOM_CHECK_CALLED_AET'
@@ -247,12 +220,6 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
     restartPolicy: 'Always'
   }
 }
-
-
-//output vm string = jumpbox_deployment.outputs.hostname
-//output vnet string = jumpbox_deployment.outputs.vnetName
-//output qveraSubnetName string = add_subnet.outputs.subnetName
-//output qveraSubnetId string = add_subnet.outputs.subnetId
 
 output subnetName string = subnet.name
 output subnetId string = subnet.id
