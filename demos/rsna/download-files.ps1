@@ -15,3 +15,10 @@ $source = 'https://www.dicomlibrary.com?study=1.2.826.0.1.3680043.8.1055.1.20111
 $destination = 'C:\Users\student\Desktop\sample.dcm'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
+mkdir 'C:\dcmtktmp\'
+mkdir 'C:\dcmtk\'
+$source = 'https://dicom.offis.de/download/dcmtk/dcmtk367/bin/dcmtk-3.6.7-win64-dynamic.zip'
+$destination = 'C:\dcmtktmp\cdmtk.zip'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+Expand-Archive -Path 'C:\dcmtktmp\cdmtk.zip' -DestinationPath 'C:\dcmtk\'

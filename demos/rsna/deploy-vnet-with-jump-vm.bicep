@@ -219,10 +219,6 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2022-08-01' = {
         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/change-rdp-port.ps1'
         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/download-files.ps1'
         'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/demos/rsna/run-needed-powershell.ps1'
-        'https://dicom.offis.de/download/dcmtk/dcmtk367/bin/dcmtk-3.6.7-win64-dynamic.zip'
-        'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Orthanc.url'
-        'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Qvera%20Interface%20Engine.url'
-        'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM.qie'
       ]  
     }
      protectedSettings: {
