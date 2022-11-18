@@ -5,15 +5,15 @@
 param location string = resourceGroup().location
 
 @description('Your existing DICOM service URL (format: https://yourworkspacename-yourdicomservicename.dicom.azurehealthcareapis.com)')
-param dicomServiceUrl string = 'https://sjbrsnadicomws-rsnadicom.dicom.azurehealthcareapis.com'
+param dicomServiceUrl string //= 'https://sjbrsnadicomws-rsnadicom.dicom.azurehealthcareapis.com'
 
 @description('Your existing Azure AD tenant ID (format: 72xxxxxf-xxxx-xxxx-xxxx-xxxxxxxxxxx)')
 //@secure()
-param aadTenantId string = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+param aadTenantId string //= '72f988bf-86f1-41af-91ab-2d7cd011db47'
 
 @description('Your existing Application (client) ID (format: 1f8xxxxx-dxxx-xxxx-xxxx-9exxxxxxxxxx)')
 //@secure()
-param applicationClientId string = 'fd1caac5-b104-4709-8bbf-747e3f39ce9a'
+param applicationClientId string //= 'fd1caac5-b104-4709-8bbf-747e3f39ce9a'
 
 @description('Your existing Application (client) secret')
 @secure()

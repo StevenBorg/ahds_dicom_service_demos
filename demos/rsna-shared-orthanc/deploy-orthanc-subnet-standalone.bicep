@@ -33,7 +33,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' existing = {
   name: vnetName
 }
 
-var networkProfileName = '${subnetName}-networkProfile' //'aci-networkProfile'
+var networkProfileName = '${subnetName}-networkProfile' 
 var interfaceConfigName = '${subnetName}-eth0'
 var interfaceIpConfig = '${subnetName}-ipconfigprofile1'
 
@@ -79,31 +79,6 @@ resource networkProfile 'Microsoft.Network/networkProfiles@2020-11-01' = {
   }
 }
 
-
-
-
-// //Create a subnet for qvera on existing vnet
-// module add_subnet './add-subnet-for-containters-to-existing-vnet.bicep' = {
-//   name: 'qvera_subnet'
-//   dependsOn: [
-//     vnet
-//   ]
-//   params: {
-//     location: location
-//     vnet_name: vnetName
-//     subnetName: subnetName
-//     subnetPrefix: subnetPrefix
-//     delegations: [
-//       {
-//         name: 'DelegationService'
-//         properties: {
-//           serviceName: 'Microsoft.ContainerInstance/containerGroups'
-//         }
-//       }      
-//     ]
-//   }
-// }
-
 resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
   name: containerGroupName
   location: location
@@ -122,6 +97,40 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
               protocol: 'TCP'
             }
           ]
+          environmentVariables: [
+            {
+              name: 'ORTHANC__NAME'
+              value: 'orthanc'
+            }
+            {
+              name: 'ORTHANC__REGISTERED_USERS'
+              value: '{"student":"student"}'
+            }
+            {
+              name: 'WVB_ENABLED'
+              value: 'true'
+            }
+            {
+              name: 'ORTHANC__DICOM_AET'
+              value: 'ORTHANC'
+            }
+            {
+              name: 'ORTHANC__DICOM_CHECK_CALLED_AET'
+              value: 'false'
+            }
+            {
+              name: 'ORTHANC__DICOM_PORT'
+              value: '4242'
+            }
+            {
+              name: 'ORTHANC__DEFAULT_ENCODING'
+              value: 'Latin1'
+            }
+            {
+              name: 'ORTHANC__DICOM_MODALITIES'
+              value: '{ "QIETOAZURE" : [ "QIETOAZURE", "10.0.1.4", 4006 ] }'
+            }
+          ]
           resources: {
             requests: {
               cpu: cpuCores
@@ -131,15 +140,15 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
         }
       } 
     ]
-    volumes: [
-      {
-        name: 'myvolume'
-        gitRepo: {
-          repository: 'https://github.com/StevenBorg/ahds_demo_config'
-          directory: '.'
-        } 
-      }
-    ]
+    // volumes: [
+    //   {
+    //     name: 'myvolume'
+    //     gitRepo: {
+    //       repository: 'https://github.com/StevenBorg/ahds_demo_config'
+    //       directory: '.'
+    //     } 
+    //   }
+    // ]
     osType: 'Linux'
     // With this commented out, we can't get the containerGroup.properties.ipAddress.ip value
     //  But this causes an error with the jump vm script
@@ -151,13 +160,8 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
   }
 }
 
-
-//output vm string = jumpbox_deployment.outputs.hostname
-//output vnet string = jumpbox_deployment.outputs.vnetName
-//output qveraSubnetName string = add_subnet.outputs.subnetName
-//output qveraSubnetId string = add_subnet.outputs.subnetId
-
 output subnetName string = subnet.name
 output subnetId string = subnet.id
 output networkProfileName string = networkProfile.name
 output networkProfileId string = networkProfile.id
+

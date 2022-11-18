@@ -5,6 +5,24 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 - Azure CLI that includes Bicep support, if using CLI instead of Portal to deploy infrastructure
 - Qvera QIE license
   - A 90-day trial license is easily available at https://www.qvera.com/hl7-interface-engine/#get-started-section. Scroll down to click the **Start a Free 90-day Trial** button, enter some information, and a key will be emailed immediately to your account.
+- This demo is used for groups of people who want to pre-load Orthanc with medical images. To do so, we simply use an Azure hosted Blob store to hold the binary DICOM files, and an Azure hosted PostgresSQL to hold the metadata. Every attendee instance of Orthanc has database locking turned off and connects to the same backend, Azure hosted services. Both these services must be installed and configured prior to running this demo.
+- App Registration. You must also create an app registration that will provide authentication (shared) for all the parts of this demo. In real life, you will likely choose to create app registrations for each application, however, for simplicity we will share the same app registration across all the services.
+
+Once all the above have been created, you will need to have the following information in order to run the scripts that automate the deployment.
+- Orthanc configuration:
+  - Orthanc Blob Store backend connection string
+  - Orthanc PostgresSQL admin login name and password (if not provided, the default name will be 'student').
+- MedDream configuration:
+  - App registration data:
+    - Client ID
+    - Tenant ID
+    - Login
+  
+To run the labs, you'll need some similar information.
+- App registration data - same as above
+- OAuth2 URI endpoint for tokens
+  - Simply put the tenant ID from above into the following URL (being sure to REMOVE the {} brackets: https://login.microsoftonline.com/{tenantID}/oauth2/token
+
 
 ## Steps
 - Create the Azure environment. This can be done in one of two ways. You can use the Bicep command line, which is easiest if you are running this repo multiple times for development. Or you can use the Azure Portal user experience, which is easiest for a one-off deployment. Both create identical environments.
@@ -39,7 +57,7 @@ This demo script deploys a simulated on-premises infrastructure that includes a 
 - Log into the Jump-VM virtual machine
   - In the resulting dialog, dismiss any warnings and click *Connect*
   - When prompted to log in, click *more choices* the *Choose a different account* to type your own credentials.
-  - In the email section, enter `.\student` and then enter the password you created above (when you ran the Bicep file).
+  - In the email section, enter `student` and then enter the password you created above (when you ran the Bicep file).
   - If prompted with a warning, click "Yes" to connect.
 - Configure Jump-VM
   - Click *Accept* for default privacy settings.

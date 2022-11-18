@@ -225,4 +225,4 @@ output subnetName string = subnet.name
 output subnetId string = subnet.id
 output networkProfileName string = networkProfile.name
 output networkProfileId string = networkProfile.id
-output testuri string = environment().suffixes.storage
+

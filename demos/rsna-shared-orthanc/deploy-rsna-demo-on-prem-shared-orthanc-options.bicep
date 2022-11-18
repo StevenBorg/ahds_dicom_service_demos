@@ -1,6 +1,6 @@
+
 // This script deploys the on-prem solution 
-// This script deploys the on-prem solution 
-@description('Administrator Password for Jump VM and SQL.')
+@description('Administrator Password for Orthanc.')
 @minLength(12)
 @secure()
 param adminPassword string

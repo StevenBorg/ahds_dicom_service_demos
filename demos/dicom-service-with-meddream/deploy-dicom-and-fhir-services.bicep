@@ -97,8 +97,11 @@ resource workspace 'Microsoft.HealthcareApis/workspaces@2022-06-01' = {
 // }
 
 resource myrole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (should_add_dicom_app_registration) {
-  name: guid(dicom_roleDefinitionId,dicom_principalId) //just a couple things to get a random guid
+  name: guid(dicom_roleDefinitionId,dicom_principalId,resourceGroup().id) //just a couple things to get a semi-random guid, but same for same inputs
   scope: workspace::dicom //is this how we attach to a particular DICOM server?
+  dependsOn: [
+    workspace
+  ]
   properties: {
     roleDefinitionId: dicom_roleDefinitionId
     principalId: dicom_principalId

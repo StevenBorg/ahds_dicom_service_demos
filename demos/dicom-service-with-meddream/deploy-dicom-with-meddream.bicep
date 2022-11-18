@@ -120,5 +120,5 @@ output dicom_deployed bool = should_deploy_dicom
 
 output meddreamIp string = meddream_deployment.outputs.meddreamIp
 //output meddreamFqdn string =meddream_deployment.outputs.meddreamFqdn
-output meddreamPort array = meddream_deployment.outputs.meddreamPort
+//output meddreamPort object = meddream_deployment.outputs.meddreamPort
 
