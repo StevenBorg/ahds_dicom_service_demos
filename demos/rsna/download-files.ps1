@@ -23,3 +23,9 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 $source = 'https://www.dicomlibrary.com?study=1.2.826.0.1.3680043.8.1055.1.20111102150758591.92402465.76095170'
 $destination = 'C:\downloads\sample.dcm'
 Invoke-RestMethod -Uri $source -OutFile $destination
+
+New-LocalUser -Name "student" -Description "Description of this account." -NoPassword
+
+$source = 'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Orthanc.url'
+$destination = 'C:\Users\student\Desktop\Orthanc.url'
+Invoke-RestMethod -Uri $source -OutFile $destination
