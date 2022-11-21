@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<license>
+  <maxUsers>30</maxUsers>
+  <isLockSerial>1</isLockSerial>
+  <software>MedDream</software>
+  <data>5010983ddb3954a80608977dd4c7d63112940012a3ffc724a6a60d7eea6e3667d1f589c10a54535613ea8242ca5672e510c47213e54380f8c4eed13ab57bc7f440c274ed736a94f307c2b4ddea2b86c23bfb7bfcbadb7d43cbf65982c7af249773a7e76aa02d6ef367baa294114f45e27783856eb45284e7153f1db2d99c4c9e5e97cd2cb38cd608855afc1a4cc97799a1e47712ae23c1292e17c7b71f2d49fedecf7db17013520d273d57469c0ed7358035a2d018c806bf36e77d6822a2d81243ce92bee1c29781d8206eccd689654c5e6602ea66b90782272396defdbed32f6acfc61c990e24e1a8180f05eddcdb0a0f9196d3496b12d5d3e0e488106c65844316e3572172f2ea1841834a0d6b1af508d860a0a5123fe9e9001ac789fab4e8a42a66a19fbf78515e5eef8ef6c3ec60666985b2f8543bbbb450fc71e9b691677d68934e5cacf7c37fc753581e5bb83a2de4d0884a3c040787bb88c56a34d038cfe4b1882a2dd194c2e06226421c3133fc4e8d5e253a4362047934cb1f7e7bd5569f4dd91863997f695277a650439d07c04a895f0627ff2652ec0788d8cf00dcfa14c3c8f206e32a016b44efeb0cd9254a5fd8f68ad76335c1a8c09d6320552175423f4a60aca0d6b3fb18df60e84709f84cdeec4cf71517c7d8edc6cfb15a87cf642f02c8f1480973aaead8f5cfdc12b934bdc434e82414cc8ee1cbf579414f</data>
+  <module>Report,Evaluation</module>
+  <onlineUpdate>6</onlineUpdate>
+  <isOnline>1</isOnline>
+  <isRebranded>1</isRebranded>
+  <distributor>
+    <country>US</country>
+    <city>Redmond</city>
+    <webUrl>https://news.microsoft.com/</webUrl>
+    <name>Microsoft</name>
+    <state>WA</state>
+    <email>Steven.Borg@microsoft.com</email>
+  </distributor>
+  <modules>
+    <module>
+      <name>Report</name>
+      <id>1</id>
+    </module>
+    <module>
+      <name>Evaluation</name>
+      <id>258</id>
+    </module>
+  </modules>
+  <endUser>
+    <country>US</country>
+    <city>Redmond</city>
+    <webUrl>https://news.microsoft.com/</webUrl>
+    <name>Microsoft</name>
+    <state>WA</state>
+    <email>Steven.Borg@microsoft.com</email>
+  </endUser>
+  <updatesTo>2022-12-31</updatesTo>
+  <serial>MD30W-5SL83-B21ED-04PEN</serial>
+  <isDocker>1</isDocker>
+  <validTo>2022-12-31</validTo>
+</license>

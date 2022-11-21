@@ -1,0 +1,92 @@
+Command to run Azure with Powershell
+
+
+Connect-AzAccount
+Get-AzResourceGroup
+
+# Select names from all resource groups with DeleteMe in name, assign to $foo
+$foo = Get-AzResourceGroup | Where-Object {$_.ResourceGroupName -like "*DeleteMe*" } | ForEach-Object {$_.ResourceGroupName}
+$foo
+$foo | ForEach-Object -Parallel { Remove-AzResourceGroup -Name $_ -Force }
+
+
+
+New-AzResourceGroup -Name sjbDeleteMe1 -Location "East US";
+New-AzResourceGroupDeployment -ResourceGroupName sjbDeleteMe1 `
+  -TemplateFile all-up-standalone.bicep `
+  -TemplateParameterFile C:\Temp\odl.parameters.json `
+  -workspace_name "rsnastudent01" `
+  -dicom_service_name "mydicom"
+
+  $wsprefix = "rsnastudent"
+  $rgprefix = "rnsastudentrg"
+  1..5 | ForEach { $foo=$wsprefix$_; Write-Output $foo}
+
+
+# spinning up the uploader
+az functionapp plan create --resource-group {resource-group-name} --name {app-service-plan-name} --location {REGION} --number-of-workers 1 --sku EP1 --is-linux
+
+az functionapp create --name {function-app-name} --storage-account {storage-account-name} --resource-group {resource-group-name} --plan {app-service-plan-name} --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity [system]
+az functionapp config appsettings set --name {function-app-name} --resource-group {resource-group-name} --settings "sourcestorage__blobcontainer={source-container-name}" "sourcestorage__blobServiceUri={source-blob-url}" "sourcestorage__queueServiceUri={source-queue-url}" "DicomWeb__Endpoint={dicom-service-endpoint}" "DicomWeb__Authentication__Enabled=true" "DicomWeb__Authentication__AuthenticationType=ManagedIdentity" "DicomWeb__Authentication__ManagedIdentityCredential__Resource=https://dicom.healthcareapis.azure.com"
+
+
+az group create --name sjbUploader --location 'eastus'
+az functionapp plan create --resource-group sjbUploader --name sjbAppService2 --location eastus --number-of-workers 1 --sku EP1 --is-linux
+# go create an sjbdicomstore in the sjbUploader resource group
+az functionapp create --name uploaderfunction --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppService --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity [system]
+az functionapp config appsettings set --name uploaderfa --resource-group sjbUploader --settings "sourcestorage__blobcontainer=dicomfiles" "sourcestorage__blobServiceUri=https://sjbdicomstore.blob.core.windows.net/" "sourcestorage__queueServiceUri=https://sjbdicomstore.queue.core.windows.net/" "DicomWeb__Endpoint=https://rsnastudent1-mydicom.dicom.azurehealthcareapis.com" "DicomWeb__Authentication__Enabled=true" "DicomWeb__Authentication__AuthenticationType=ManagedIdentity" "DicomWeb__Authentication__ManagedIdentityCredential__Resource=https://dicom.healthcareapis.azure.com"
+
+az functionapp create --name uploaderfa2 --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppService --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity /subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb/resourcegroups/sjbUploader/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uploadid
+
+Doesn't work
+az functionapp create --name uploaderfa3 --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppService --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity 2d0934b5-be8a-4aca-84d3-dc01621f9766
+az functionapp create --name uploaderfa4 --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppService --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity /subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb/resourcegroups/sjbUploader/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sjbDicomAppReg
+
+Works:
+az functionapp create --name uploaderfa5 --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppService --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity /subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb/resourcegroups/sjbUploader/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uploadid
+az functionapp config appsettings set --name uploaderfa5 --resource-group sjbUploader --settings "sourcestorage__blobcontainer=dicomfiles" "sourcestorage__blobServiceUri=https://sjbdicomstore.blob.core.windows.net/" "sourcestorage__queueServiceUri=https://sjbdicomstore.queue.core.windows.net/" "DicomWeb__Endpoint=https://rsnastudent3-mydicom.dicom.azurehealthcareapis.com" "DicomWeb__Authentication__Enabled=true" "DicomWeb__Authentication__AuthenticationType=ManagedIdentity" "DicomWeb__Authentication__ManagedIdentityCredential__Resource=https://dicom.healthcareapis.azure.com"
+
+# OK.  Now let's try with a user-assigned managed identity
+
+ODL subscription ID: 49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb
+
+az identity create -g <RESOURCE GROUP> -n <USER ASSIGNED IDENTITY NAME>
+
+az role assignment create --assignee $spID --role 'Reader' --scope /subscriptions/<mySubscriptionID>/resourceGroups/<myResourceGroup>/providers/Microsoft.Storage/storageAccounts/myStorageAcct
+
+
+az identity create -g sjbUploader -n uploadid
+az identity list -g sjbUploader
+
+DOESN't WORK i don't think:
+az role assignment create --assignee /subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb/resourcegroups/sjbUploader/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uploadid --role 'Dicom Data Owner' --scope /subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb
+
+
+{
+  "clientId": "8250fae6-cb1c-4e4f-b561-ad2d516a4e3f",
+  "id": "/subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb/resourcegroups/sjbUploader/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uploadid",
+  "location": "eastus",
+  "name": "uploadid",
+  "principalId": "f70c1577-50b8-465c-9989-002be29e45c9",
+  "resourceGroup": "sjbUploader",
+  "tags": {},
+  "tenantId": "4e13d65b-1445-49d4-8400-023651715a9d",
+  "type": "Microsoft.ManagedIdentity/userAssignedIdentities"
+}
+
+
+https://learn.microsoft.com/en-us/azure/storage-mover/service-overview
+
+
+
+az functionapp create --name uploadfn --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppService2 --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity [system]
+
+az functionapp config appsettings set --name uploaderfn --resource-group sjbUploader --settings "sourcestorage__blobcontainer=dicomfiles" "sourcestorage__blobServiceUri=https://sjbdicomstore.blob.core.windows.net/" "sourcestorage__queueServiceUri=https://sjbdicomstore.queue.core.windows.net/" "DicomWeb__Endpoint=https://rsnastudent4-mydicom.dicom.azurehealthcareapis.com" "DicomWeb__Authentication__Enabled=true" "DicomWeb__Authentication__AuthenticationType=ManagedIdentity" "DicomWeb__Authentication__ManagedIdentityCredential__Resource=https://dicom.healthcareapis.azure.com"
+
+
+az functionapp plan create --resource-group sjbUploader --name sjbAppSvc --location eastus --number-of-workers 3 --sku EP1 --is-linux
+az functionapp create --name upfn --storage-account sjbdicomstore --resource-group sjbUploader --plan sjbAppSvc --deployment-container-image-name dicomoss.azurecr.io/dicom-uploader:latest --functions-version 4 --assign-identity /subscriptions/49a8ebce-39d4-4b3d-85f4-8d81c9ebc6cb/resourcegroups/sjbUploader/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uploadid
+az functionapp config appsettings set --name upfn --resource-group sjbUploader --settings "sourcestorage__blobcontainer=dicomfiles" "sourcestorage__blobServiceUri=https://sjbdicomstore.blob.core.windows.net/" "sourcestorage__queueServiceUri=https://sjbdicomstore.queue.core.windows.net/" "DicomWeb__Endpoint=https://rsnastudent4-mydicom.dicom.azurehealthcareapis.com" "DicomWeb__Authentication__Enabled=true" "DicomWeb__Authentication__AuthenticationType=ManagedIdentity" "DicomWeb__Authentication__ManagedIdentityCredential__Resource=https://dicom.healthcareapis.azure.com"
+
+
+
