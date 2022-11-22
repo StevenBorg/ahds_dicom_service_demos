@@ -1,10 +1,10 @@
 # Download and expand dcmtk
 mkdir 'C:\dcmtk\'
 $source = 'https://dicom.offis.de/download/dcmtk/dcmtk367/bin/dcmtk-3.6.7-win64-dynamic.zip'
-$destination = 'C:\dcmtk\cdmtk.zip'
+$destination = 'C:\dcmtk\dcmtk.zip'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-Expand-Archive -Path 'C:\dcmtk\cdmtk.zip' -DestinationPath 'C:\dcmtk\'
+Expand-Archive -Path 'C:\dcmtk\dcmtk.zip' -DestinationPath 'C:\dcmtk\'
 
 # Download convenience files for students
 mkdir 'C:\downloads'
