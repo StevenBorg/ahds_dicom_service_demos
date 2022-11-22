@@ -1,18 +1,18 @@
 # The following finds all workspaces with the rsnastudent in them and kills them
-$foo = Get-AzResourceGroup | Where-Object {$_.ResourceGroupName -like "*rsna-workshop-student-*" } | ForEach-Object {$_.ResourceGroupName}
+$foo = Get-AzResourceGroup | Where-Object {$_.ResourceGroupName -like "rsna-workshop-standalone-student-*" } | ForEach-Object {$_.ResourceGroupName}
 $foo
-$foo | ForEach-Object -ThrottleLimit 40 -Parallel  { Remove-AzResourceGroup -Name $_ -Force }
+$foo | ForEach-Object -ThrottleLimit 40 -AsJob -Parallel  { Remove-AzResourceGroup -Name $_ -Force }
 
 # The following generates the list of resource groups to create
 # It cannot be run in parallel because it behaves weirdly
 $students = @()
-$wsprefix = "rsnaworkshop";
-$rgprefix = "rsna-workshop-standalone-student-";
+$wsprefix = "rsnaworkshopws";
+$rgprefix = "rsna-workshop-standalone-newappreg-student-";
 $dicomname = "mydicom";
 $filepathprefix = "C:\Temp\";
 Set-Content -Path C:\Temp\dicomservices.txt -value ""
 Clear-Content -Path C:\Temp\dicomservices.txt  
-1..3 |  ForEach-Object { 
+21..24 |  ForEach-Object { 
             $sampleHashtable = @{
                 resourcegroup = $rgprefix+$_;
                 workspace = $wsprefix+$_;

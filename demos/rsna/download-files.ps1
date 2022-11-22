@@ -24,7 +24,6 @@ $source = 'https://www.dicomlibrary.com?study=1.2.826.0.1.3680043.8.1055.1.20111
 $destination = 'C:\downloads\sample.dcm'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221120_multithreaded.qie?raw=true'
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221121.qie?raw=true'
 $destination = 'C:\downloads\qie_MicrosoftDICOM_20221120_multithreaded.qie'
 Invoke-RestMethod -Uri $source -OutFile $destination
-
