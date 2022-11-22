@@ -1,11 +1,14 @@
 
 # create the docker image
-docker build -t stevenborg/uploader .
+docker build --no-cache -t stevenborg/uploader .
 
 # run the docker image with environment variables
 docker run -it --restart=on-failure:2 --env-file C:/Temp/foo.env stevenborg/uploader
 
 docker run -it --restart=on-failure:2 -e  stevenborg/uploader
+
+#upload docker 
+docker push stevenborg/uploader
 
 
 
