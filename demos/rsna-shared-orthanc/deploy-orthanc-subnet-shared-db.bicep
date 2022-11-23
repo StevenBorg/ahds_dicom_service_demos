@@ -17,10 +17,10 @@ param image string = 'osimis/orthanc:22.6.1-full'
 param port int = 80
 
 @description('The number of CPU cores to allocate to the container. Must be an integer.')
-param cpuCores int = 2
+param cpuCores int = 4
 
 @description('The amount of memory to allocate to the container in gigabytes.')
-param memoryInGb int = 8
+param memoryInGb int = 16
 
 @description('Subnet Prefix')
 param subnetPrefix string = '10.0.2.0/24'

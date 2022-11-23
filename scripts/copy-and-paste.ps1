@@ -6,13 +6,13 @@ $foo | ForEach-Object -ThrottleLimit 40 -AsJob -Parallel  { Remove-AzResourceGro
 # The following generates the list of resource groups to create
 # It cannot be run in parallel because it behaves weirdly
 $students = @()
-$wsprefix = "rsnaworkshop";
-$rgprefix = "rsna-workshop-standalone-student-";
+$wsprefix = "rsnatestworkshop1123";
+$rgprefix = "rsna-workshop-test1123-student-";
 $dicomname = "mydicom";
 $filepathprefix = "C:\Temp\";
 Set-Content -Path C:\Temp\dicomservices.txt -value ""
 Clear-Content -Path C:\Temp\dicomservices.txt  
-5..6 |  ForEach-Object { 
+1..32 |  ForEach-Object { 
             $sampleHashtable = @{
                 resourcegroup = $rgprefix+$_;
                 workspace = $wsprefix+$_;
