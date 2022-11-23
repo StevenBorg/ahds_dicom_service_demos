@@ -69,7 +69,7 @@ param applicationClientSecret string
 // Basically run: az ad sp list --filter "displayName eq 'rsna-demo-viewer-app1'" and get the id provided there - of course with your Application ID name
 @description('Object ID of the Principal of the Application - confusing - see https://github.com/Azure/terraform-azurerm-appgw-ingress-k8s-cluster/issues/1 ')
 @secure()
-param dicom_principalId string //= '7e086154-4646-4550-b350-f94fadc6720b' // Object ID of rsna app reg
+param dicom_principalId string // Object ID of rsna app reg
 
 // Deploy the on prem solution
 module onprem './deploy-rsna-demo-on-prem-shared-orthanc-options.bicep' = {
@@ -100,7 +100,7 @@ module cloud '../dicom-service-with-meddream/deploy-dicom-with-meddream.bicep' =
 
 output dicom_uri string = cloud.outputs.dicom_uri
 output meddreamIp string = cloud.outputs.meddreamIp
-output meddreamPort string = cloud.outputs.meddreamPort[0]
+//output meddreamPort string = cloud.outputs.meddreamPort[0]
 
 
 

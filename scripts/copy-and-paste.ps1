@@ -1,5 +1,5 @@
 # The following finds all workspaces with the rsnastudent in them and kills them
-$foo = Get-AzResourceGroup | Where-Object {$_.ResourceGroupName -like "rsna-workshop-standalone-student-4*" } | ForEach-Object {$_.ResourceGroupName}
+$foo = Get-AzResourceGroup | Where-Object {$_.ResourceGroupName -like "rsna-workshop-standalone-student-2*" } | ForEach-Object {$_.ResourceGroupName}
 $foo
 $foo | ForEach-Object -ThrottleLimit 40 -AsJob -Parallel  { Remove-AzResourceGroup -Name $_ -Force }
 
@@ -12,7 +12,7 @@ $dicomname = "mydicom";
 $filepathprefix = "C:\Temp\";
 Set-Content -Path C:\Temp\dicomservices.txt -value ""
 Clear-Content -Path C:\Temp\dicomservices.txt  
-42..43 |  ForEach-Object { 
+5..6 |  ForEach-Object { 
             $sampleHashtable = @{
                 resourcegroup = $rgprefix+$_;
                 workspace = $wsprefix+$_;
@@ -35,7 +35,19 @@ $job = $students | ForEach-Object -AsJob -ThrottleLimit 40 -Parallel {
      -TemplateParameterFile $_.parameterfn `
      -workspace_name $_.workspace  `
      -dicom_service_name $_.dicomname;  
-    Write-Output $_.workspace   
+    Write-Output $_.resourcegroup   
+}
+$job.ChildJobs
+
+
+$students | ForEach-Object -ThrottleLimit 40 -Parallel { 
+    New-AzResourceGroup -Name $_.resourcegroup -Location "East US" -Force;
+    New-AzResourceGroupDeployment -ResourceGroupName $_.resourcegroup `
+     -TemplateFile all-up-standalone.bicep `
+     -TemplateParameterFile $_.parameterfn `
+     -workspace_name $_.workspace  `
+     -dicom_service_name $_.dicomname;  
+    Write-Output $_.resourcegroup   
 }
 $job.ChildJobs
 

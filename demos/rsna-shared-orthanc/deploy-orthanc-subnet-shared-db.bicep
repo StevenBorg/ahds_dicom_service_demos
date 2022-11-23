@@ -145,7 +145,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__POSTGRESQL__HOST'
-              value: 'orthancpostgres.postgres.database.azure.com'
+              value: 'rsnaorthanc.postgres.database.azure.com'
             }
             {
               name: 'ORTHANC__POSTGRESQL__PORT'
@@ -190,6 +190,14 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             {
               name: 'ORTHANC__DICOM_MODALITIES'
               value: '{ "QIETOAZURE" : [ "QIETOAZURE", "10.0.1.4", 4006 ] }'
+            }
+            {
+              name: 'ORTHANC__DICOM_THREADS_COUNT'
+              value: '40'
+            }
+            {
+              name: 'ORTHANC__CONCURRENT_JOBS'
+              value: '0'
             }
           ]
           resources: {
