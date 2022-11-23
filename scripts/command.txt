@@ -90,3 +90,4 @@ az functionapp config appsettings set --name upfn --resource-group sjbUploader -
 
 
 
+gdcmscu.exe --hostname 10.0.1.4 --port 4007 --call

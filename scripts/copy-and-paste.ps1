@@ -6,13 +6,13 @@ $foo | ForEach-Object -ThrottleLimit 40 -AsJob -Parallel  { Remove-AzResourceGro
 # The following generates the list of resource groups to create
 # It cannot be run in parallel because it behaves weirdly
 $students = @()
-$wsprefix = "rsnaworkshopws";
+$wsprefix = "rsnaworkshop";
 $rgprefix = "rsna-workshop-standalone-newappreg-student-";
 $dicomname = "mydicom";
 $filepathprefix = "C:\Temp\";
 Set-Content -Path C:\Temp\dicomservices.txt -value ""
 Clear-Content -Path C:\Temp\dicomservices.txt  
-21..24 |  ForEach-Object { 
+31..34 |  ForEach-Object { 
             $sampleHashtable = @{
                 resourcegroup = $rgprefix+$_;
                 workspace = $wsprefix+$_;
@@ -28,7 +28,7 @@ $students
 
 # The following creates the resource groups in parallel, up to 30 at a time
 #  This approach locks the command line while it runs, could change to AsJob and get control back
-$students | ForEach-Object -ThrottleLimit 40 -Parallel { 
+$job = $students | ForEach-Object -AsJob -ThrottleLimit 40 -Parallel { 
     New-AzResourceGroup -Name $_.resourcegroup -Location "East US" -Force;
     New-AzResourceGroupDeployment -ResourceGroupName $_.resourcegroup `
      -TemplateFile all-up-standalone.bicep `
