@@ -24,13 +24,13 @@ Expand-Archive -Path 'C:\dicoms\dicoms.zip' -DestinationPath 'C:\dicoms\'
 
 
 # Download convenience files for students
-mkdir 'C:\downloads'
+#mkdir 'C:\downloads'
 $source = 'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Orthanc.url'
-$destination = 'C:\downloads\Orthanc.url'
+$destination = 'C:\Users\Default\Desktop\Orthanc.url'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
 $source = 'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Qvera%20Interface%20Engine.url'
-$destination = 'C:\downloads\QveraInterfaceEngine.url'
+$destination = 'C:\Users\Default\Desktop\QveraInterfaceEngine.url'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
 # $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM.qie?raw=true'
@@ -38,13 +38,17 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 # Invoke-RestMethod -Uri $source -OutFile $destination
 
 $source = 'https://www.dicomlibrary.com?study=1.2.826.0.1.3680043.8.1055.1.20111102150758591.92402465.76095170'
-$destination = 'C:\downloads\sample.dcm'
+$destination = 'C:\Users\Default\Desktop\sample.dcm'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
 $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221121.qie?raw=true'
-$destination = 'C:\downloads\qie_MicrosoftDICOM_20221120_multithreaded.qie'
+$destination = 'C:\Users\Default\Desktop\qie_MicrosoftDICOM_20221121.qie'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-$source = 'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Qvera%20Interface%20Engine.url'
-$destination = 'C:\Users\Default\Desktop\QveraInterfaceEngine.url'
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/modality-upload-1.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\modality-upload-1.cmd'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/modality-upload-2.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\modality-upload-2.cmd'
 Invoke-RestMethod -Uri $source -OutFile $destination
