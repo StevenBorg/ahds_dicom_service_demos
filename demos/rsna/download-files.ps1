@@ -6,13 +6,22 @@
 
 # Expand-Archive -Path 'C:\dcmtk\dcmtk.zip' -DestinationPath 'C:\dcmtk\'
 
-https://github.com/malaterre/GDCM/releases/download/v3.0.20/GDCM-3.0.20-Windows-x86_64.zip?raw=true
+
 mkdir 'C:\gdcm\'
 $source = 'https://github.com/malaterre/GDCM/releases/download/v3.0.20/GDCM-3.0.20-Windows-x86_64.zip?raw=true'
 $destination = 'C:\gdcm\gdcm.zip'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
 Expand-Archive -Path 'C:\gdcm\gdcm.zip' -DestinationPath 'C:\gdcm\'
+
+
+mkdir 'C:\dicoms\'
+$source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/dicoms.zip?raw=true'
+$destination = 'C:\dicoms\dicoms.zip'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+Expand-Archive -Path 'C:\dicoms\dicoms.zip' -DestinationPath 'C:\dicoms\'
+
 
 # Download convenience files for students
 mkdir 'C:\downloads'
@@ -35,7 +44,6 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221121.qie?raw=true'
 $destination = 'C:\downloads\qie_MicrosoftDICOM_20221120_multithreaded.qie'
 Invoke-RestMethod -Uri $source -OutFile $destination
-
 
 $source = 'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Qvera%20Interface%20Engine.url'
 $destination = 'C:\Users\Default\Desktop\QveraInterfaceEngine.url'
