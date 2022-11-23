@@ -22,6 +22,20 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 
 Expand-Archive -Path 'C:\dicoms\dicoms.zip' -DestinationPath 'C:\dicoms\'
 
+mkdir 'C:\newdicoms\'
+$source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/new.zip?raw=true'
+$destination = 'C:\newdicoms\new.zip'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+Expand-Archive -Path 'C:\newdicoms\new.zip' -DestinationPath 'C:\newdicoms'
+
+
+#mkdir 'C:\newdicoms\'
+$source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/recent.zip?raw=true'
+$destination = 'C:\newdicoms\recent.zip'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+Expand-Archive -Path 'C:\newdicoms\recent.zip' -DestinationPath 'C:\Users\Default\Desktop'
 
 # Download convenience files for students
 #mkdir 'C:\downloads'
