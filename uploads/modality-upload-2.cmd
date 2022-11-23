@@ -1,0 +1,1 @@
+C:\gdcm\GDCM-3.0.20-Windows-x86_64\bin\gdcmscu.exe --store --hostname 10.0.1.4 --port 4007 --call QIEROUTER --input C:\dicoms\dicoms\case2\case2a_001.dcm
