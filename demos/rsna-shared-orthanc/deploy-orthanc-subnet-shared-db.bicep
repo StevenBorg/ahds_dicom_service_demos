@@ -157,7 +157,7 @@ resource orthancContainerGroup 'Microsoft.ContainerInstance/containerGroups@2019
             }
             {
               name: 'ORTHANC__POSTGRESQL__USERNAME'
-              value: 'student'
+              value: 'OrthancAdmin'
             }
             {
               name: 'ORTHANC__POSTGRESQL__PASSWORD'
