@@ -33,4 +33,3 @@ Ensure you're in the the directory where the all-up-standalone.bicep file exists
 
 type `az deployment group create --template-file all-up-standalone.bicep  --parameters @C:\Temp\odl.parameters.json --resource-group sjbDeleteMe1` to deploy a standalone deployment.
 
-
