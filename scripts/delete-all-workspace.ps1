@@ -85,7 +85,7 @@ $location = "East US";
 
 
 #  Looks like I need to copy the parameters file multiple times, otherwise it can't be read in parallel...
-1..40 |  ForEach-Object { 
+1..99 |  ForEach-Object { 
     $prefix="odl"+$_; 
     $fn=$prefix+".parameters.json";
     Write-Output $fn; 

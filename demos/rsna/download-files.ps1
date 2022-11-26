@@ -15,27 +15,26 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 Expand-Archive -Path 'C:\gdcm\gdcm.zip' -DestinationPath 'C:\gdcm\'
 
 
+# mkdir 'C:\dicoms\'
+# $source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/dicoms.zip?raw=true'
+# $destination = 'C:\dicoms\dicoms.zip'
+# Invoke-RestMethod -Uri $source -OutFile $destination
+
+# Expand-Archive -Path 'C:\dicoms\dicoms.zip' -DestinationPath 'C:\dicoms\'
+
 mkdir 'C:\dicoms\'
-$source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/dicoms.zip?raw=true'
-$destination = 'C:\dicoms\dicoms.zip'
-Invoke-RestMethod -Uri $source -OutFile $destination
-
-Expand-Archive -Path 'C:\dicoms\dicoms.zip' -DestinationPath 'C:\dicoms\'
-
-mkdir 'C:\newdicoms\'
 $source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/new.zip?raw=true'
-$destination = 'C:\newdicoms\new.zip'
+$destination = 'C:\dicoms\new.zip'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-Expand-Archive -Path 'C:\newdicoms\new.zip' -DestinationPath 'C:\newdicoms'
-
+Expand-Archive -Path 'C:\dicoms\new.zip' -DestinationPath 'C:\dicoms'
 
 #mkdir 'C:\newdicoms\'
 $source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/recent.zip?raw=true'
-$destination = 'C:\newdicoms\recent.zip'
+$destination = 'C:\dicoms\recent.zip'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-Expand-Archive -Path 'C:\newdicoms\recent.zip' -DestinationPath 'C:\Users\Default\Desktop'
+Expand-Archive -Path 'C:\dicoms\recent.zip' -DestinationPath 'C:\dicoms'
 
 # Download convenience files for students
 #mkdir 'C:\downloads'
@@ -51,18 +50,26 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 # $destination = 'C:\downloads\qie_MicrosoftDICOM.qie'
 # Invoke-RestMethod -Uri $source -OutFile $destination
 
-$source = 'https://www.dicomlibrary.com?study=1.2.826.0.1.3680043.8.1055.1.20111102150758591.92402465.76095170'
-$destination = 'C:\Users\Default\Desktop\sample.dcm'
-Invoke-RestMethod -Uri $source -OutFile $destination
+# $source = 'https://www.dicomlibrary.com?study=1.2.826.0.1.3680043.8.1055.1.20111102150758591.92402465.76095170'
+# $destination = 'C:\Users\Default\Desktop\sample.dcm'
+# Invoke-RestMethod -Uri $source -OutFile $destination
 
 $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221121.qie?raw=true'
 $destination = 'C:\Users\Default\Desktop\qie_MicrosoftDICOM_20221121.qie'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/modality-upload-1.cmd?raw=true'
-$destination = 'C:\Users\Default\Desktop\modality-upload-1.cmd'
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/1-preload-orthanc.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\1-preload-orthanc.cmd'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
-$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/modality-upload-2.cmd?raw=true'
-$destination = 'C:\Users\Default\Desktop\modality-upload-2.cmd'
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/2-modality-pushing-to-orthanc.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\2-modality-pushing-to-orthanc.cmd'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/3-modality-pushing-to-qie.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\3-modality-pushing-to-qie.cmd'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/4-modality-pushing-to-qie-extra.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\4-modality-pushing-to-qie-extra.cmd'
 Invoke-RestMethod -Uri $source -OutFile $destination

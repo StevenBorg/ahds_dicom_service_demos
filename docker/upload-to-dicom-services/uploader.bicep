@@ -27,7 +27,6 @@ param applicationClientSecret string
 param sourceBlobConnStr string 
 
 @description('The blob container name with DICOM files, and ONLY DICOM files')
-@secure()
 param sourceBlobContainerName string 
 
 @description('Container image to deploy. Should be of the form accountName/imagename:tag for images stored in Docker Hub or a fully qualified URI for a private registry like the Azure Container Registry.')
@@ -107,9 +106,9 @@ resource uploader 'Microsoft.ContainerInstance/containerGroups@2019-12-01' = {
     }
     osType: 'Linux'
 
-    restartPolicy: 'Always'
+    restartPolicy: 'Never' //'Always'
   }
 }
 
-output meddreamIp string = uploader.properties.ipAddress.ip
-output meddreamPort array = uploader.properties.ipAddress.ports
+output uploaderIP string = uploader.properties.ipAddress.ip
+//output meddreamPort array = uploader.properties.ipAddress.ports
