@@ -36,6 +36,12 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 
 Expand-Archive -Path 'C:\dicoms\recent.zip' -DestinationPath 'C:\dicoms'
 
+$source = 'https://github.com/StevenBorg/ahds_demo_config/blob/main/priors.zip?raw=true'
+$destination = 'C:\dicoms\priors.zip'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+Expand-Archive -Path 'C:\dicoms\priors.zip' -DestinationPath 'C:\dicoms'
+
 # Download convenience files for students
 #mkdir 'C:\downloads'
 $source = 'https://raw.githubusercontent.com/StevenBorg/ahds_dicom_service_demos/main/uploads/Orthanc.url'
@@ -54,8 +60,8 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 # $destination = 'C:\Users\Default\Desktop\sample.dcm'
 # Invoke-RestMethod -Uri $source -OutFile $destination
 
-$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221121.qie?raw=true'
-$destination = 'C:\Users\Default\Desktop\qie_MicrosoftDICOM_20221121.qie'
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221123.qie?raw=true'
+$destination = 'C:\Users\Default\Desktop\qie_MicrosoftDICOM_20221123.qie'
 Invoke-RestMethod -Uri $source -OutFile $destination
 
 $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/1-preload-orthanc.cmd?raw=true'
@@ -72,4 +78,8 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 
 $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/4-modality-pushing-to-qie-extra.cmd?raw=true'
 $destination = 'C:\Users\Default\Desktop\4-modality-pushing-to-qie-extra.cmd'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/5-migrate-archive.cmd?raw=true'
+$destination = 'C:\Users\Default\Desktop\5-migrate-archive.cmd'
 Invoke-RestMethod -Uri $source -OutFile $destination
