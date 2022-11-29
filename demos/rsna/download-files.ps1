@@ -60,6 +60,10 @@ Invoke-RestMethod -Uri $source -OutFile $destination
 # $destination = 'C:\Users\Default\Desktop\sample.dcm'
 # Invoke-RestMethod -Uri $source -OutFile $destination
 
+$source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_Prefetch_Priors_and_Missing_Series_20221128.qie?raw=true'
+$destination = 'C:\Users\Default\Desktop\qie_Prefetch_Priors_and_Missing_Series_20221128.qie'
+Invoke-RestMethod -Uri $source -OutFile $destination
+
 $source = 'https://github.com/StevenBorg/ahds_dicom_service_demos/blob/main/uploads/qie_MicrosoftDICOM_20221123.qie?raw=true'
 $destination = 'C:\Users\Default\Desktop\qie_MicrosoftDICOM_20221123.qie'
 Invoke-RestMethod -Uri $source -OutFile $destination
